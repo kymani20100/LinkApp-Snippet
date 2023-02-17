@@ -59,6 +59,7 @@ import Profile from "./screens/Profile";
 import IOS from "./screens/IOS";
 import FormGenerator from "./screens/FormGenerator";
 import ContactForm from "./screens/ContactForm";
+import ImageForm from "./screens/ImageForm";
 
 const Tab = createBottomTabNavigator();
 
@@ -114,7 +115,7 @@ export default function App() {
               <Tab.Screen
                 options={{ headerShown: false }}
                 name="Favorites"
-                component={ContactForm}
+                component={ImageForm}
               />
               <Tab.Screen
                 options={{ headerShown: false }}
