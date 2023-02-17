@@ -34,13 +34,28 @@ const ImageForm = () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
+      aspect: [4, 3],
       quality: 1,
     });
 
-    if (!result.cancelled) {
-      setImage(result.uri);
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
     }
   };
+
+  // const pickImage = async () => {
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
+  //     allowsEditing: true,
+  //     aspect: [4, 3],
+  //     quality: 1,
+  //   });
+  
+  //   if (!result.canceled) {
+  //     setImage(result.assets[0].uri);
+  //   }
+  // };
+  
 
   const submitForm = () => {
     const formData = new FormData();
@@ -65,7 +80,7 @@ const ImageForm = () => {
   };
 
   return (
-    <View>
+    <View style={{marginTop: 25, padding: 10}}>
       {formFields.map((field, index) => (
         <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
           <View style={{ flex: 1, marginRight: 10 }}>
