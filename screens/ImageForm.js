@@ -43,18 +43,50 @@ const ImageForm = () => {
     }
   };
 
-  // const pickImage = async () => {
-  //   let result = await ImagePicker.launchImageLibraryAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
-  //     allowsEditing: true,
-  //     aspect: [4, 3],
-  //     quality: 1,
-  //   });
-  
-  //   if (!result.canceled) {
-  //     setImage(result.assets[0].uri);
+  // const express = require('express');
+  // const bodyParser = require('body-parser');
+  // const multer = require('multer');
+  // const path = require('path');
+  // const app = express();
+  // const PORT = 5000;
+
+  // // Configure Multer for handling file uploads
+  // const storage = multer.diskStorage({
+  //   destination: function (req, file, cb) {
+  //     cb(null, 'uploads/')
+  //   },
+  //   filename: function (req, file, cb) {
+  //     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
   //   }
-  // };
+  // })
+  // const upload = multer({ storage: storage });
+
+  // // Configure body-parser for parsing form data
+  // app.use(bodyParser.urlencoded({ extended: true }));
+  // app.use(bodyParser.json());
+
+  // // Define a route for handling form submissions
+  // app.post('/submit-form', upload.single('image'), (req, res) => {
+  //   // Extract form data from the request
+  //   const { name, email, phone } = req.body;
+  //   const image = req.file;
+
+  //   // Process the form data as needed
+  //   // For this example, we'll just log the form data to the console
+  //   console.log(`Name: ${name}`);
+  //   console.log(`Email: ${email}`);
+  //   console.log(`Phone: ${phone}`);
+  //   console.log(`Image: ${image ? image.filename : 'None'}`);
+
+  //   // Send a response to the client
+  //   res.status(200).send('Form submitted successfully!');
+  // });
+
+  // // Start the server
+  // app.listen(PORT, () => {
+  //   console.log(`Server listening on port ${PORT}`);
+  // });
+
   
 
   const submitForm = () => {
