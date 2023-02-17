@@ -54,6 +54,11 @@ import Alphabet from "./screens/Alphabet";
 import Section from "./screens/Section";
 import Jackpot from "./screens/Jackpot";
 import JackpotSearch from "./screens/JackpotSearch";
+import ProfilePage from "./screens/ProfilePage";
+import Profile from "./screens/Profile";
+import IOS from "./screens/IOS";
+import FormGenerator from "./screens/FormGenerator";
+import ContactForm from "./screens/ContactForm";
 
 const Tab = createBottomTabNavigator();
 
@@ -83,7 +88,6 @@ export default function App() {
               screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
                   let iconName;
-
                   if (route.name === "Favorites") {
                     iconName = focused ? "ios-star" : "ios-star-sharp";
                   } else if (route.name === "Recents") {
@@ -108,9 +112,9 @@ export default function App() {
               })}
             >
               <Tab.Screen
-                // options={{ headerShown: false }}
+                options={{ headerShown: false }}
                 name="Favorites"
-                component={JackpotSearch}
+                component={ContactForm}
               />
               <Tab.Screen
                 options={{ headerShown: false }}
