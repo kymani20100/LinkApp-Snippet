@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
+import React, { Component, useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,16 +8,46 @@ import {
   TouchableOpacity,
   SectionList,
   StyleSheet,
-  Linking, Keyboard, LayoutAnimation
+  Linking,
+  Keyboard,
+  LayoutAnimation,
+  TouchableWithoutFeedback,
 } from "react-native";
+import nicecolors from "nice-color-palettes";
+const colors = [
+  ...nicecolors[3].slice(1, nicecolors[1].length),
+  ...nicecolors[55].slice(0, 3),
+];
+import { Avatar, Button, Card } from "react-native-paper";
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+  Fontisto,
+  Entypo,
+  FontAwesome,
+} from "@expo/vector-icons";
+import {
+  ScrollView,
+  Spacer,
+  Center,
+  Heading,
+  HStack,
+  VStack,
+  Icon,
+  Box,
+  IconButton,
+  FlatList, Divider
+} from "native-base";
+
 import { FloatingAction } from "react-native-floating-action";
-import QRCode from 'qrcode.react';
+import QRCode from "qrcode.react";
 
 const DATA = [
   { id: "1", name: "Alice", phone: "111-111-1111" },
+  { id: "2", name: "Bob", phone: "222-222-2222" },
   { id: "27", name: "Alice", phone: "111-111-1111" },
   { id: "28", name: "Ashley", phone: "111-111-1111" },
-  { id: "2", name: "Bob", phone: "222-222-2222" },
   { id: "3", name: "Charlie", phone: "333-333-3333" },
   { id: "4", name: "David", phone: "444-444-4444" },
   { id: "5", name: "Eva", phone: "555-555-5555" },
@@ -43,13 +74,13 @@ const DATA = [
   { id: "26", name: "Zoe", phone: "222-777-2222" },
 ];
 
-const ContactsScreen = () => {
+const ContactScreen = () => {
   const [searchTerm, setSearchTerm] = useState("");
+
   const [selectedAlphabet, setSelectedAlphabet] = useState(null);
   const [contactData, setContactData] = useState([]);
   const sectionListRef = useRef(null);
   const [keyboardShown, setKeyboardShown] = useState(false);
-
 
   const actions = [
     {
@@ -120,33 +151,72 @@ const ContactsScreen = () => {
     dataBySection[sectionTitle].push(item);
   });
 
-  useEffect(() => {
-    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      setKeyboardShown(true);
-    });
-    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      setKeyboardShown(false);
-    });
-  
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
-  }, []);
-
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search..."
-          value={searchTerm}
-          onChangeText={handleSearchTermChange}
-        />
-      </View>
+    <VStack bg="#f7f7f7" flex={1}>
+      <StatusBar bg="#f7f7f7" barStyle="light-content" />
+      <Box safeAreaTop bg="#f7f7f7" />
+
+      <HStack
+        bg="#f7f7f7"
+        px="1"
+        py="0"
+        justifyContent="space-between"
+        alignItems="center"
+        w="100%"
+        maxW="350"
+      >
+        <HStack alignItems="center">
+          <Text style={styles.ApplicationName}>LinkApp</Text>
+        </HStack>
+        <HStack mr={1}>
+          <IconButton
+            icon={
+              <Icon
+                as={Ionicons}
+                name="md-person-add"
+                size="sm"
+                color="#0085f7"
+              />
+            }
+          />
+          <IconButton
+            icon={<Icon as={Fontisto} name="trash" size="sm" color="#0085f7" />}
+          />
+          <IconButton
+            icon={
+              <Icon
+                as={MaterialIcons}
+                name="more-vert"
+                size="sm"
+                color="#0085f7"
+              />
+            }
+          />
+        </HStack>
+      </HStack>
+
+      <HStack
+        bg="#f7f7f7"
+        px="1"
+        py="-2"
+        justifyContent="space-between"
+        alignItems="center"
+        w="100%"
+        maxW="350"
+      >
+        <HStack alignItems="center">
+          <View style={styles.searchContainer}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search..."
+              value={searchTerm}
+              onChangeText={handleSearchTermChange}
+            />
+          </View>
+        </HStack>
+      </HStack>
 
       <SectionList
         ref={sectionListRef}
@@ -158,9 +228,10 @@ const ContactsScreen = () => {
             onLongPress={() => alert(`Selected ${item.name}`)}
           >
             <View style={{ padding: 8 }}>
-              <Text>{item.name}</Text>
+              <Text style={{color: '#000'}}>{item.name}</Text>
               <Text style={{ color: "#aaa" }}>{item.phone}</Text>
             </View>
+            <Divider bg="#f9f9f9" thickness={3} />
           </TouchableOpacity>
         )}
         renderSectionHeader={({ section }) => (
@@ -169,6 +240,7 @@ const ContactsScreen = () => {
           </View>
         )}
       />
+
       <View style={styles.alphabetList}>
         {alphabet.map((letter, index) => (
           <TouchableOpacity
@@ -188,9 +260,9 @@ const ContactsScreen = () => {
         ))}
       </View>
 
-    
       <FloatingAction
-        color="#1253bc"
+        color="#0085f7"
+        // iconColor="#2eac86"
         iconHeight={15}
         iconWidth={15}
         buttonSize={50}
@@ -204,30 +276,38 @@ const ContactsScreen = () => {
           }
         }}
       />
-    </SafeAreaView>
+    </VStack>
   );
 };
-export default ContactsScreen;
+
+export default ContactScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // marginTop: 25
+  ApplicationName: {
+    fontFamily: "Roboto_500Medium",
+    fontSize: 18,
+    letterSpacing: 1,
+    color: "#0085f7",
+    marginLeft: 10,
   },
   searchContainer: {
+    flex: 1,
     padding: 8,
   },
   searchInput: {
-    backgroundColor: "#eee",
-    borderRadius: 4,
+    backgroundColor: "#e5e5e5",
+    borderRadius: 5,
     padding: 8,
+    width: "96%",
+    height: 30,
   },
   sectionHeader: {
-    backgroundColor: "#eee",
+    backgroundColor: "#e5e5e5",
     padding: 8,
   },
   sectionHeaderText: {
     fontWeight: "bold",
+    color: "#000",
   },
   alphabetList: {
     position: "absolute",
@@ -236,15 +316,15 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
+    // backgroundColor: "#121212",
     width: 20,
   },
   alphabet: {
-    color: "#bbb",
+    color: "#0085f7",
     fontSize: 12,
   },
   selectedAlphabet: {
-    color: "#000",
+    color: "#015ba8",
     fontSize: 14,
     fontWeight: "bold",
   },
