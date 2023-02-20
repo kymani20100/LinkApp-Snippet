@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 const CIRCLE_RADIUS = 30;
 
-const FlatListWithDialog = () => {
+const ContactList = (props) => {
   
   const [dialogVisible, setDialogVisible] = useState(false);
   const [dialogX, setDialogX] = useState(0);
@@ -78,13 +78,13 @@ const FlatListWithDialog = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    width: '100%',
+    height: 100
+    // padding: 20,
   },
   itemContainer: {
-    padding: 20,
     backgroundColor: '#f5f5f5',
-    borderRadius: 10,
-    marginBottom: 20,
+    // marginBottom: 20,
     borderColor: '#c0dfdb',
     borderWidth: 1,
 
@@ -115,4 +115,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FlatListWithDialog;
+export default ContactList;

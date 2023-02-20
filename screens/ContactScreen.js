@@ -11,13 +11,15 @@ import {
   Linking,
   Keyboard,
   LayoutAnimation,
-  TouchableWithoutFeedback,
+  TouchableWithoutFeedback, 
+  Animated
 } from "react-native";
-import nicecolors from "nice-color-palettes";
-const colors = [
-  ...nicecolors[3].slice(1, nicecolors[1].length),
-  ...nicecolors[55].slice(0, 3),
-];
+
+// import nicecolors from "nice-color-palettes";
+// const colors = [
+//   ...nicecolors[3].slice(1, nicecolors[1].length),
+//   ...nicecolors[55].slice(0, 3),
+// ];
 import { Avatar, Button, Card } from "react-native-paper";
 import {
   Ionicons,
@@ -42,6 +44,12 @@ import {
 
 import { FloatingAction } from "react-native-floating-action";
 import QRCode from "qrcode.react";
+
+// FLOATING
+const CIRCLE_RADIUS = 30;
+
+// IMPORT THE Components
+import Upgrade from "./Upgrade";
 
 const DATA = [
   { id: "1", name: "Alice", phone: "111-111-1111" },
@@ -81,6 +89,7 @@ const ContactScreen = () => {
   const [contactData, setContactData] = useState([]);
   const sectionListRef = useRef(null);
   const [keyboardShown, setKeyboardShown] = useState(false);
+  const [dialogVisible, setDialogVisible] = useState(false);
 
   const actions = [
     {
@@ -152,6 +161,8 @@ const ContactScreen = () => {
   });
 
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
+  
 
   return (
     <VStack bg="#f7f7f7" flex={1}>
@@ -228,12 +239,12 @@ const ContactScreen = () => {
             onLongPress={() => alert(`Selected ${item.name}`)}
           >
             <View style={{ padding: 8 }}>
-              <Text style={{color: '#000'}}>{item.name}</Text>
+              <Text>{item.name}</Text>
               <Text style={{ color: "#aaa" }}>{item.phone}</Text>
             </View>
-            <Divider bg="#f9f9f9" thickness={3} />
           </TouchableOpacity>
         )}
+        
         renderSectionHeader={({ section }) => (
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionHeaderText}>{section.title}</Text>
@@ -345,4 +356,5 @@ const styles = StyleSheet.create({
   qrCode: {
     marginVertical: 16,
   },
+ 
 });

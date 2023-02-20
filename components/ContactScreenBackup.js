@@ -1,25 +1,23 @@
 import { StatusBar } from "expo-status-bar";
 import React, { Component, useState, useRef, useEffect } from "react";
 import {
-  StyleSheet,
   View,
-  Animated,
-  Easing,
-  useWindowDimensions,
-  FlatList,
   Text,
   TextInput,
   SafeAreaView,
   TouchableOpacity,
   SectionList,
+  StyleSheet,
   Linking,
   Keyboard,
   LayoutAnimation,
-  Vibration,
+  TouchableWithoutFeedback,
 } from "react-native";
-
-const SPRING_CONFIG = { tension: 50, friction: 8 };
-
+import nicecolors from "nice-color-palettes";
+const colors = [
+  ...nicecolors[3].slice(1, nicecolors[1].length),
+  ...nicecolors[55].slice(0, 3),
+];
 import { Avatar, Button, Card } from "react-native-paper";
 import {
   Ionicons,
@@ -28,7 +26,6 @@ import {
   Fontisto,
   Entypo,
   FontAwesome,
-  Octicons
 } from "@expo/vector-icons";
 import {
   ScrollView,
@@ -40,12 +37,14 @@ import {
   Icon,
   Box,
   IconButton,
-  Divider,
+  FlatList, Divider
 } from "native-base";
 
 import { FloatingAction } from "react-native-floating-action";
-// FLOATING
-const CIRCLE_RADIUS = 30;
+import QRCode from "qrcode.react";
+
+// IMPORT THE Components
+import ContactList from "./ContactList";
 
 const DATA = [
   { id: "1", name: "Alice", phone: "111-111-1111" },
@@ -78,64 +77,30 @@ const DATA = [
   { id: "26", name: "Zoe", phone: "222-777-2222" },
 ];
 
-const FloatingTabBar = () => {
-  // FROM CONTACT SCREEN
+const ContactScreen = () => {
   const [searchTerm, setSearchTerm] = useState("");
+
   const [selectedAlphabet, setSelectedAlphabet] = useState(null);
   const [contactData, setContactData] = useState([]);
   const sectionListRef = useRef(null);
   const [keyboardShown, setKeyboardShown] = useState(false);
-  const [dialogVisible, setDialogVisible] = useState(false);
 
-  const [longPress, setLongPressed] = useState(false);
-  const [selectedItems, setSelectedItems] = useState([]);
+  const actions = [
+    {
+      text: "Add",
+      icon: require("../assets/scan.png"),
+      name: "Add",
+      position: 1,
+    },
+    {
+      text: "Send",
+      icon: require("../assets/qr-code.png"),
+      name: "Send",
+      position: 2,
+      onPress: {},
+    },
+  ];
 
-  const handleItemPress = (itemId) => {
-    setLongPressed(true);
-    // Add the selected item's ID to the array
-    // Vibrate the device for 500 milliseconds
-    Vibration.vibrate(100);
-
-    if (selectedItems.includes(itemId)) {
-      // If the item is already selected, remove it from the array
-      setSelectedItems(selectedItems.filter(id => id !== itemId));
-    } else {
-      // If the item is not selected, add it to the array
-      setSelectedItems([...selectedItems, itemId]);
-    }
-  };
-
-  // CLEAR THE ITEM
-  const clearItems = () => {
-    setSelectedItems([]);
-    // Vibrate the device for 500 milliseconds
-    Vibration.vibrate(100);
-    setLongPressed(false);
-  };
-
-  // THIS IS FOR THE TAB FLOATING
-  const { width } = useWindowDimensions();
-  const [isVisible, setIsVisible] = useState(true);
-  const translateY = useRef(new Animated.Value(0)).current;
-  const prevOffsetY = useRef(0);
-
-  // THIS BLOCK HANDLES SCROLL CLICK
-  const onScroll = (event) => {
-    const offsetY = event.nativeEvent.contentOffset.y;
-    const visible = offsetY < 200 || offsetY < prevOffsetY.current; // show the tab bar only when scrolling up a bit or when scrolling down
-    if (visible !== isVisible) {
-      setIsVisible(visible);
-      Animated.spring(translateY, {
-        toValue: visible ? 0 : 90,
-        ...SPRING_CONFIG,
-        useNativeDriver: true,
-      }).start();
-    }
-    prevOffsetY.current = offsetY;
-  };
-  // THIS IS FOR THE TAB FLOATING
-
-  // THIS IS FROM CONTACT SCREEN
   const handleSearchTermChange = (value) => {
     setSearchTerm(value);
     setSelectedAlphabet(null);
@@ -150,7 +115,6 @@ const FloatingTabBar = () => {
     Linking.openURL(`tel:${phone}`);
   };
 
-  // THIS BLOCK HANDLES ALPHABET CLICK
   const handleAlphabetClick = (index) => {
     setSelectedAlphabet(index);
     const matchingItemIndex = DATA.findIndex((item) =>
@@ -170,22 +134,6 @@ const FloatingTabBar = () => {
       });
     }
   };
-
-  const actions = [
-    {
-      text: "Add",
-      icon: require("../assets/scan.png"),
-      name: "Add",
-      position: 1,
-    },
-    {
-      text: "Send",
-      icon: require("../assets/qr-code.png"),
-      name: "Send",
-      position: 2,
-      onPress: {},
-    },
-  ];
 
   // Filter
   const filteredData = DATA.filter((item) =>
@@ -209,41 +157,12 @@ const FloatingTabBar = () => {
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
   return (
-    <VStack bg="#FFF" flex={1}>
-      <StatusBar bg="#FFF" barStyle="light-content" />
-      <Box safeAreaTop bg="#FFF" />
+    <VStack bg="#f7f7f7" flex={1}>
+      <StatusBar bg="#f7f7f7" barStyle="light-content" />
+      <Box safeAreaTop bg="#f7f7f7" />
 
-      {selectedItems.length > 0 ? 
-      (
-        <HStack
-        bg="#FFF"
-        px="1"
-        py="0"
-        justifyContent="space-between"
-        alignItems="center"
-        w="100%"
-        maxW="350"
-      >
-        <HStack alignItems="center">
-        <TouchableOpacity onPress={clearItems}>
-                <IconButton
-                  icon={<Icon as={Ionicons} name="ios-arrow-back" size="sm" color="#0085f7" />}
-                />
-            </TouchableOpacity> 
-
-            <Text style={styles.selectedItems}>{selectedItems.length} Selected</Text>
-        </HStack>
-        <HStack mr={1}>
-         <TouchableOpacity onPress={clearItems}>
-                <IconButton
-                  icon={<Icon as={Octicons} name="trash" size="sm" color="#0085f7" />}
-                />
-            </TouchableOpacity> 
-        </HStack>
-      </HStack>    
-      ) : (
-        <HStack
-        bg="#FFF"
+      <HStack
+        bg="#f7f7f7"
         px="1"
         py="0"
         justifyContent="space-between"
@@ -265,7 +184,9 @@ const FloatingTabBar = () => {
               />
             }
           />
-         
+          <IconButton
+            icon={<Icon as={Fontisto} name="trash" size="sm" color="#0085f7" />}
+          />
           <IconButton
             icon={
               <Icon
@@ -278,11 +199,9 @@ const FloatingTabBar = () => {
           />
         </HStack>
       </HStack>
-      )}
-     
 
       <HStack
-        bg="#FFF"
+        bg="#f7f7f7"
         px="1"
         py="-2"
         justifyContent="space-between"
@@ -308,16 +227,16 @@ const FloatingTabBar = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => {longPress === true ? handleItemPress(item.id) : handlePhoneIconPress(item.phone)}}
-            onLongPress={() => handleItemPress(item.id)}
+            onPress={() => handlePhoneIconPress(item.phone)}
+            onLongPress={() => alert(`Selected ${item.name}`)}
           >
             <View style={{ padding: 8 }}>
-              <Text style={styles.contactList}>{item.name}</Text>
-              {/* <Text style={{ color: "#aaa" }}>{item.phone}</Text> */}
+              <Text style={{color: '#000'}}>{item.name}</Text>
+              <Text style={{ color: "#aaa" }}>{item.phone}</Text>
             </View>
+            <Divider bg="#f9f9f9" thickness={3} />
           </TouchableOpacity>
         )}
-        onScroll={onScroll}
         renderSectionHeader={({ section }) => (
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionHeaderText}>{section.title}</Text>
@@ -352,7 +271,6 @@ const FloatingTabBar = () => {
         buttonSize={50}
         textElevation={5}
         actions={actions}
-        distanceToEdge={{vertical: 70, horizontal: 30}}
         onPressItem={(name) => {
           if (name === "Add") {
             // handle option 1 click
@@ -361,73 +279,19 @@ const FloatingTabBar = () => {
           }
         }}
       />
-
-      <Animated.View style={[styles.tabBar, { transform: [{ translateY }] }]}>
-        <View style={styles.tabBackground}>
-          <View style={styles.tabBarItem}>
-            <MaterialCommunityIcons name="home" size={24} color="#FFF" />
-          </View>
-          <View style={styles.tabBarItem}>
-            <Ionicons name="ios-search" size={24} color="#FFF" />
-          </View>
-          <View style={styles.tabBarItem}>
-            <MaterialCommunityIcons name="account" size={24} color="#FFF" />
-          </View>
-        </View>
-      </Animated.View>
     </VStack>
   );
 };
 
+export default ContactScreen;
+
 const styles = StyleSheet.create({
-  tabBar: {
-    position: "absolute",
-    bottom: 10,
-    left: 0,
-    right: 0,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  tabBackground: {
-    width: "90%",
-    height: 50,
-    borderRadius: 40,
-    backgroundColor: "#0085f7",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
-    // borderWidth: 2,
-    // borderColor: "#0085f7",
-    shadowColor: "#8d8d8d",
-    shadowOffset: { width: -5, height: 5},
-    shadowOpacity: .4,
-    shadowRadius: 3,
-    elevation: 6,
-  },
-  tabBarItem: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   ApplicationName: {
-    fontFamily: "Roboto_900Black",
+    fontFamily: "Roboto_500Medium",
     fontSize: 18,
     letterSpacing: 1,
     color: "#0085f7",
     marginLeft: 10,
-  },
-  selectedItems: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontFamily: "Roboto_500Medium",
-    color: "#0085f7",
-    marginLeft: 10,
-  },
-  contactList: {
-    fontFamily: "Roboto_400Regular",
-    color: "#A1A1A1",
-    letterSpacing: 1,
   },
   searchContainer: {
     flex: 1,
@@ -445,12 +309,12 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   sectionHeaderText: {
-    fontFamily: "Roboto_900Black",
+    fontWeight: "bold",
     color: "#000",
   },
   alphabetList: {
     position: "absolute",
-    right: 5,
+    right: 0,
     top: 0,
     bottom: 0,
     justifyContent: "center",
@@ -459,14 +323,13 @@ const styles = StyleSheet.create({
     width: 20,
   },
   alphabet: {
-    fontFamily: "Roboto_400Regular",
     color: "#0085f7",
-    fontSize: 13,
+    fontSize: 12,
   },
   selectedAlphabet: {
-    fontFamily: "Roboto_900Black",
     color: "#015ba8",
-    fontSize: 15,
+    fontSize: 14,
+    fontWeight: "bold",
   },
   item: {
     padding: 10,
@@ -486,5 +349,3 @@ const styles = StyleSheet.create({
     marginVertical: 16,
   },
 });
-
-export default FloatingTabBar;

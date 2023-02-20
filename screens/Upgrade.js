@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated, FlatList } from 'react-native';
+
 const CIRCLE_RADIUS = 30;
 
-const FlatListWithDialog = () => {
+const Upgrade = (props) => {
   
   const [dialogVisible, setDialogVisible] = useState(false);
   const [dialogX, setDialogX] = useState(0);
@@ -33,16 +34,31 @@ const FlatListWithDialog = () => {
     }).start();
   };
 
+  const data = [
+    { id: '1', text: 'Item 1' },
+    { id: '2', text: 'Item 2' },
+    { id: '3', text: 'Item 3' },
+    // add more items as needed
+  ];
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      style={styles.itemContainer}
+      onPress={handleClose}
+      onLongPress={handleLongPress}
+      activeOpacity={0.6}
+    >
+      <Text style={styles.itemText}>{item.text}</Text>
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.itemContainer}
-        onPress={handleClose}
-        onLongPress={handleLongPress}
-        activeOpacity={0.6}
-      >
-        <Text style={styles.itemText}>Item 1</Text>
-      </TouchableOpacity>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
 
       {dialogVisible && (
         <Animated.View
@@ -87,7 +103,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderColor: '#c0dfdb',
     borderWidth: 1,
-
   },
   itemText: {
     fontSize: 16,
@@ -115,4 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FlatListWithDialog;
+export default Upgrade;
