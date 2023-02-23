@@ -120,22 +120,6 @@ const ContactsScreen = () => {
     dataBySection[sectionTitle].push(item);
   });
 
-  useEffect(() => {
-    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      setKeyboardShown(true);
-    });
-    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      setKeyboardShown(false);
-    });
-  
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
-  }, []);
-
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
   return (
     <SafeAreaView style={styles.container}>

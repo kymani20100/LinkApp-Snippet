@@ -49,6 +49,7 @@ import { FloatingAction } from "react-native-floating-action";
 import QRCode from 'react-native-qrcode-svg';
 // FLOATING
 const CIRCLE_RADIUS = 30;
+const ITEM_HEIGHT = 35;
 
 const DATA = [
   { id: "1", name: "Alice", phone: "111-111-1111" },
@@ -81,31 +82,19 @@ const DATA = [
   { id: "26", name: "Zoe", phone: "222-777-2222" },
 ];
 
-const actions = [
-  {
-    text: "Add",
-    icon: require("../assets/scan.png"),
-    name: "Add",
-    position: 1,
-  },
-  {
-    text: "Send",
-    icon: require("../assets/qr-code.png"),
-    name: "Send",
-    position: 2,
-    onPress: {},
-  },
-];
-
 const FloatingTabBar = () => {
   const { isOpen, onOpen, onClose } = useDisclose();
   // FROM CONTACT SCREEN
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedAlphabet, setSelectedAlphabet] = useState(null);
+  // const [contactData, setContactData] = useState([]);
   const sectionListRef = useRef(null);
+  // const [keyboardShown, setKeyboardShown] = useState(false);
+  // const [dialogVisible, setDialogVisible] = useState(false);
 
   const [longPress, setLongPressed] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
+  // const [showQRCode, setShowQRCode] = useState(false);
 
   const handleItemPress = (itemId) => {
     setLongPressed(true);
@@ -167,6 +156,7 @@ const FloatingTabBar = () => {
       viewOffset: 0,
     });
   };
+  
 
   const handlePhoneIconPress = (phone) => {
     Linking.openURL(`tel:${phone}`);
@@ -193,6 +183,22 @@ const FloatingTabBar = () => {
     }
   };
 
+  const actions = [
+    {
+      text: "Add",
+      icon: require("../assets/scan.png"),
+      name: "Add",
+      position: 1,
+    },
+    {
+      text: "Send",
+      icon: require("../assets/qr-code.png"),
+      name: "Send",
+      position: 2,
+      onPress: {},
+    },
+  ];
+
   // Filter
   const filteredData = DATA.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -212,17 +218,17 @@ const FloatingTabBar = () => {
     dataBySection[sectionTitle].push(item);
   });
 
+  // const getItemLayout = (data, index) => ({
+  //   length: ITEM_HEIGHT,
+  //   offset: ITEM_HEIGHT * index,
+  //   index,
+  // });
+
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
   const handleActionSheet = () => {
     onOpen();
   };
-
-  const getItemLayout = (data, index) => ({
-    length: 40,
-    offset: 40 * index,
-    index,
-  });
 
   return (
     <VStack bg="#FFF" flex={1}>
@@ -248,7 +254,7 @@ const FloatingTabBar = () => {
                 />
             </TouchableOpacity> 
 
-            <Text style={styles.selectedItems}>{selectedItems.length} item(s) selected</Text>
+            <Text style={styles.selectedItems}>{selectedItems.length} Contact Selected</Text>
         </HStack>
         <HStack mr={1}>
          <TouchableOpacity onPress={handleActionSheet}>
@@ -330,13 +336,12 @@ const FloatingTabBar = () => {
             onPress={() => {longPress === true ? handleItemPress(item.id) : handlePhoneIconPress(item.phone)}}
             onLongPress={() => handleItemPress(item.id)}
           >
-            <View style={{ padding: 8, height: 40 }}>
+            <View style={{padding: 10,}}>
               <Text style={styles.contactList}>{item.name}</Text>
-              {/* <Text style={{ color: "#aaa" }}>{item.phone}</Text> */}
             </View>
           </TouchableOpacity>
         )}
-        getItemLayout={getItemLayout} // add this line
+        // getItemLayout={getItemLayout} // add this line
         onScroll={onScroll}
         renderSectionHeader={({ section }) => (
           <View style={styles.sectionHeader}>

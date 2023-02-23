@@ -93,16 +93,17 @@ import KeypadScreen from "./screens/KeypadScreen";
 import Filter from "./screens/Filter";
 import Alphabet from "./screens/Alphabet";
 import Section from "./screens/Section"; // Left Columned laid alphabet
-import Jackpot from "./screens/Jackpot";
+import AlphabetList from "./screens/AlphabetList";
 import JackpotSearch from "./screens/JackpotSearch";
 import ProfilePage from "./screens/ProfilePage";
-import Profile from "./screens/Profile";
+// import Profile from "./screens/Profile";
+// import ProfileDetails from "./screens/ProfileDetails"
 import IOS from "./screens/IOS";
 import FormGenerator from "./screens/FormGenerator";
 import ContactForm from "./screens/ContactForm";
 import ImageForm from "./screens/ImageForm";
 import Shrinking from "./screens/Shrinking";
-import PhoneNumberInput from "./PhoneNumberInput";
+import PhoneNumberInput from "./screens/PhoneNumberInput";
 import Pinterest from "./screens/Pinterest";
 import FloatingTabBar from "./screens/FloatingTabBar";
 import FlatListWithDialog from "./screens/FlatListWithDialog";
@@ -110,12 +111,26 @@ import Dialog from "./screens/Dialog";
 import Upgrade from "./screens/Upgrade";
 import Segment from "./screens/Segment";
 import FormField from "./screens/FormField";
-
+import ActionSheet from "./screens/ActionSheet";
+import ProfileRegistration from "./screens/ProfileRegistration";
+import ProfilePicture from "./screens/ProfilePicture";
+import ShareItemsQRCode from "./screens/ShareItemsQRCode";
+// import ShareItemsAndScanQRCode from "./screens/ShareItemsAndScanQRCode";
+import QRFunctionality from "./screens/QRFunctionality";
+import Utility from "./screens/Utility";
+import NewSection from "./screens/NewSection";
+import Updated from "./screens/Updated";
+import Merged from "./screens/Merged";
+import Merger from "./screens/Merger";
+import LongPress from "./screens/LongPress";
 
 // Production
 import ContactScreen from "./screens/ContactScreen";
 import StartScreen from "./screens/StartScreen";
 import SignUpScreen from "./screens/SignUpScreen";
+
+// Revised
+import Contacts from "./screens/Contacts";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -234,7 +249,7 @@ export default function App() {
             <PaperProvider>
               <NavigationContainer>
                 <Stack.Navigator>
-                  <Stack.Screen options={{ headerShown: false }} name="Home" component={StartScreen} />
+                  <Stack.Screen options={{ headerShown: false }} name="Home" component={Contacts} />
                   <Stack.Screen options={{ headerShown: false }} name="SignUp" component={SignUpScreen} />
                   <Stack.Screen options={{ headerShown: false }} name="Floating" component={FloatingTabBar} />
                   <Stack.Screen options={{ headerShown: false }} name="Pinterest" component={Pinterest} />
