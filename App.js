@@ -116,6 +116,7 @@ import Merger from "./screens/Merger";
 import LongPress from "./screens/LongPress";
 import SearchScreen from "./screens/SearchScreen";
 import Fab from "./screens/Fab";
+import Loading from "./screens/Loading";
 
 // Production
 import ContactScreen from "./screens/ContactScreen";
@@ -211,7 +212,7 @@ export default function App() {
   });
 
   if (!fontsLoaded) {
-    return null;
+    return <Loading />;
   }
 
   // THIS IS FOR THE INTRO BLOCK

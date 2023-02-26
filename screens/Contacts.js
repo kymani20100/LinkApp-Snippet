@@ -292,13 +292,12 @@ const Contacts = ({navigation}) => {
             {alphabet.map((letter, index) => (
             <TouchableOpacity
                 key={letter}
-                onPress={() => handleAlphabetClick(index)}
-            >
+                onPress={() => handleAlphabetClick(index)}>
                 <Text
                 style={
-                    selectedAlphabet === index
-                    ? styles.selectedAlphabet
-                    : styles.alphabet
+                  selectedAlphabet === index
+                  ? styles.selectedAlphabet
+                  : styles.alphabet
                 }
                 >
                 {letter}
@@ -344,7 +343,7 @@ const Contacts = ({navigation}) => {
         {/* THIS BLOCK IS FOR THE BAR CODE */}
         <Center>
           <Actionsheet isOpen={isOpen} onClose={onClose} disableOverlay>
-            <Actionsheet.Content bg={'#ececec'}>
+            <Actionsheet.Content bg={'#201d1a'}>
             <View style={{width: '100%',alignItems: 'center'}}>
                 <Text style={styles.barCodeTitle}>SCAN THE CODE</Text>
                 <Text style={styles.barCodeText}>Thumb selects, Camera scans - Magic!</Text>
@@ -363,17 +362,17 @@ export default Contacts;
 
 const styles = StyleSheet.create({
     ApplicationName: {
-        fontFamily: "Roboto_900Black",
-        fontSize: 20,
-        letterSpacing: 1,
-        color: "#fbcf9c",
+      fontFamily: "Roboto_900Black",
+      fontSize: 20,
+      letterSpacing: 1.5,
+      color: "#fbcf9c",
     },
     selectedItems: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontFamily: "Roboto_500Medium",
-    color: "#fbcf9c",
-    marginLeft: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+      fontFamily: "Roboto_500Medium",
+      color: "#fbcf9c",
+      marginLeft: 10,
     },
   searchContainer: {
     padding: 8,
@@ -414,7 +413,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: "#fff",
     width: 20,
   },
   alphabet: {
@@ -424,7 +422,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   selectedAlphabet: {
-    color: "#d3a877",
+    color: "#b6844a",
     fontSize: 14,
     fontWeight: "bold",
   },
@@ -480,18 +478,18 @@ const styles = StyleSheet.create({
   },
   barCodeTitle: {
     fontFamily: "Roboto_900Black",
-    color: "#015ba8",
+    color: "#fbcf9c",
     fontSize: 20,
     marginVertical: 5
   },
   barCodeText: {
     fontFamily: "Roboto_300Light",
-    color: "#015ba8",
+    color: "#fbcf9c",
     fontSize: 12,
     marginBottom: 10
   },
   barcodeGenerator: {
-    backgroundColor: '#0085f7', 
+    backgroundColor: '#2e2a25', 
     padding: 20, 
     marginBottom: 20, 
     justifyContent: 'center', 
