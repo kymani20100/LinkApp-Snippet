@@ -1,17 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from 'react';
-
 // import all the components we are going to use
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  Button,
-  AppRegistry
-} from 'react-native';
-
+import {SafeAreaView,StyleSheet,View,Text,Image,Button,AppRegistry} from 'react-native';
+import Toast from 'react-native-toast-message';
 //import AppIntroSlider to use it
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { ThemeProvider } from "styled-components";
@@ -70,21 +61,21 @@ const slides = [
     title: 'Accuracy',
     text: 'Accurate Contact Info Sharing in a Snap! Goodbye to manual typing and cluttered address books with LinkApp.',
     image: require('./assets/img/intro_1.png'),
-    backgroundColor: '#f6437b',
+    backgroundColor: '#201d1a',
   },
   {
     key: 's2',
     title: 'Effortlessly',
     text: 'Our innovative solution combines a sleek user-friendly interface with advanced filtering to help you quickly and easily find the information you need.',
     image: require('./assets/img/intro_2.png'),
-    backgroundColor: '#febe29',
+    backgroundColor: '#201d1a',
   },
   {
     key: 's4',
     title: 'Profiles',
     text: 'Discover the many layers of others from their interests and hobbies to their goals and aspirations. Connect and learn what makes others truly special.',
     image: require('./assets/img/intro_4.png'),
-    backgroundColor: '#20d2bb',
+    backgroundColor: '#201d1a',
   }
 ];
 
@@ -123,6 +114,8 @@ import Updated from "./screens/Updated";
 import Merged from "./screens/Merged";
 import Merger from "./screens/Merger";
 import LongPress from "./screens/LongPress";
+import SearchScreen from "./screens/SearchScreen";
+import Fab from "./screens/Fab";
 
 // Production
 import ContactScreen from "./screens/ContactScreen";
@@ -194,6 +187,15 @@ export default function App() {
   // THIS IS THE USETATE FOR THE INTRO BLOCK
   const [showRealApp, setShowRealApp] = useState(false);
 
+  // TOAST CONFIG
+  const toastConfig = {
+    success: ({ text1, ...rest }) => (
+      <View style={[styles.toastContainer, styles.successToast]}>
+        <Text style={styles.toastText}>{text1}</Text>
+      </View>
+    ),
+  };
+
   let [fontsLoaded] = useFonts({
     Roboto_100Thin,
     Roboto_300Light,
@@ -251,9 +253,10 @@ export default function App() {
                 <Stack.Navigator>
                   <Stack.Screen options={{ headerShown: false }} name="Home" component={Contacts} />
                   <Stack.Screen options={{ headerShown: false }} name="SignUp" component={SignUpScreen} />
-                  <Stack.Screen options={{ headerShown: false }} name="Floating" component={FloatingTabBar} />
+                  <Stack.Screen options={{ headerShown: false }} name="Profile" component={ProfilePage} />
                   <Stack.Screen options={{ headerShown: false }} name="Pinterest" component={Pinterest} />
                 </Stack.Navigator>
+                <Toast config={toastConfig} />
               </NavigationContainer>
             </PaperProvider>
           </NativeBaseProvider>
@@ -299,16 +302,31 @@ const styles = StyleSheet.create({
   introTextStyle: {
     fontFamily: "Roboto_400Regular",
     fontSize: 16,
-    color: 'white',
+    color: '#fbcf9c',
     textAlign: 'center',
     paddingVertical: 30,
     paddingHorizontal: 10
   },
   introTitleStyle: {
     fontSize: 25,
-    color: 'white',
+    color: '#fbcf9c',
     textAlign: 'center',
     marginBottom: 16,
     fontFamily: "Roboto_700Bold",
+  },
+  // Toast Here
+  toastContainer: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 25,
+    marginHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  successToast: {
+    backgroundColor: '#201d1a', // set your desired color here
+  },
+  toastText: {
+    color: '#fbcf9c',
   },
 });

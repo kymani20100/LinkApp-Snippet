@@ -8,7 +8,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
-  Dimensions
+  Dimensions,
+  Vibration
 } from "react-native";
 import {
   Actionsheet,
@@ -36,13 +37,118 @@ import {
   Octicons,
 } from "@expo/vector-icons";
 
+import * as Clipboard from 'expo-clipboard';
+import Toast from 'react-native-toast-message';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 const DATA = [
   { id: '1', title: 'Call', icon: 'phone', },
   { id: '2', title: 'Message', icon: 'comment', },
   { id: '3', title: 'Share', icon: 'qrcode', },
 ];
 
-const ProfilePage = () => {
+const ProfilePage = ({route,navigation}) => {
+
+  const { itemId, items } = route.params;
+  const [copiedText, setCopiedText] = useState('');
+  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [copiedHome, setCopiedHome] = useState(false);
+  const [copiedMobile, setCopiedMobile] = useState(false);
+  const [copiedWork, setCopiedWork] = useState(false);
+
+  const copyToClipboard = async (term, field) => {
+    const result = await Clipboard.setStringAsync(term);
+    if(result){
+      if(field === 'email'){
+        setCopiedEmail(true);
+        Vibration.vibrate(100);
+          Toast.show({
+              type: 'success',
+              position: 'top',
+              text1: `${field} copied`,
+              text2: `Copied ${term} to Clipboard`,
+              visibilityTime: 4000,
+              autoHide: true,
+              topOffset: 30,
+              bottomOffset: 40,
+              onShow: () => {},
+              onHide: () => {}, // called when Toast hides (if `autoHide` was set to `true`)
+              onPress: () => {},
+              props: {} // any custom props passed to the Toast component
+          });
+        setTimeout(() => {
+          setCopiedEmail(false);
+        }, 5000);
+      }else if (field === 'home'){
+        setCopiedHome(true);
+        Vibration.vibrate(100);
+        Toast.show({
+          type: 'success',
+          position: 'top',
+          text1: `${field} contact copied`,
+          text2: `Copied ${term} to Clipboard`,
+          visibilityTime: 4000,
+          autoHide: true,
+          topOffset: 30,
+          bottomOffset: 40,
+          onShow: () => {},
+          onHide: () => {}, // called when Toast hides (if `autoHide` was set to `true`)
+          onPress: () => {},
+          props: {} // any custom props passed to the Toast component
+      });
+        setTimeout(() => {
+          setCopiedHome(false);
+        }, 5000);
+      }else if (field === 'mobile'){
+        setCopiedMobile(true);
+        Vibration.vibrate(100);
+        Toast.show({
+          type: 'success',
+          position: 'top',
+          text1: `${field} contact copied`,
+          text2: `Copied ${term} to Clipboard`,
+          visibilityTime: 4000,
+          autoHide: true,
+          topOffset: 30,
+          bottomOffset: 40,
+          onShow: () => {},
+          onHide: () => {}, // called when Toast hides (if `autoHide` was set to `true`)
+          onPress: () => {},
+          props: {} // any custom props passed to the Toast component
+      });
+        setTimeout(() => {
+          setCopiedMobile(false);
+        }, 5000);
+      }else if (field === 'work'){
+        setCopiedWork(true);
+        Vibration.vibrate(100);
+        Toast.show({
+          type: 'success',
+          position: 'top',
+          text1: `${field} contact copied`,
+          text2: `Copied ${term} to Clipboard`,
+          visibilityTime: 4000,
+          autoHide: true,
+          topOffset: 30,
+          bottomOffset: 40,
+          onShow: () => {},
+          onHide: () => {}, // called when Toast hides (if `autoHide` was set to `true`)
+          onPress: () => {},
+          props: {} // any custom props passed to the Toast component
+      });
+        setTimeout(() => {
+          setCopiedWork(false);
+        }, 5000);
+      }
+    }
+  };
+
+  const fetchCopiedText = async () => {
+    const text = await Clipboard.getStringAsync();
+    setCopiedText(text);
+  };
+
   const windowWidth = Dimensions.get('window').width;
   const [scrollDirection, setScrollDirection] = useState("none");
   const [profilePictureSize, setProfilePictureSize] = useState(70);
@@ -68,11 +174,11 @@ const ProfilePage = () => {
   const ITEM_MARGIN = 10; // Change as needed
 
   return (
-    <VStack bg="#f2f2f7" flex={1}>
-      <StatusBar bg="#f2f2f7" barStyle="light-content" />
-      <Box safeAreaTop bg="#f2f2f7" />
+    <VStack bg="#201d1a" flex={1}>
+      <StatusBar bg="#2e2a25" barStyle="light-content" />
+      <Box safeAreaTop bg="#2e2a25" />
       <HStack
-        bg="#f2f2f7"
+        bg="#2e2a25"
         px="1"
         py="0"
         justifyContent="space-between"
@@ -88,7 +194,7 @@ const ProfilePage = () => {
                   as={Ionicons}
                   name="ios-arrow-back"
                   size="sm"
-                  color="#0085f7"
+                  color="#fbcf9c"
                 />
               }
             />
@@ -100,7 +206,7 @@ const ProfilePage = () => {
           <TouchableOpacity onPress={() => {}}>
             <IconButton
               icon={
-                <Icon as={Octicons} name="trash" size="sm" color="#0085f7" />
+                <Icon as={Octicons} name="trash" size="sm" color="#fbcf9c" />
               }
             />
           </TouchableOpacity>
@@ -120,7 +226,12 @@ const ProfilePage = () => {
             />
         
             <Box w="90%" maxW="400">
-              <Text style={styles.name}>Kymani Emmanuel Glimeti</Text>
+
+              <HStack px="3" justifyContent="center" alignItems="center" w="100%" maxW="350">
+                  <Text style={styles.name}>{items.name}</Text>
+                  <Image source={require('../assets/img/icons/verify.png')} style={{width: 15, height: 15, marginLeft: 5, marginTop: 10}} />
+              </HStack>
+              
             </Box>
 
               <Center w="100%">
@@ -131,7 +242,7 @@ const ProfilePage = () => {
                   keyExtractor={(item) => item.id}
                   renderItem={({ item }) => (
                     <View style={[styles.itemContainer, { width: ITEM_WIDTH, marginLeft: ITEM_MARGIN, marginRight: ITEM_MARGIN }]}>
-                      <FontAwesome name={item.icon} size={12} color="#007ef6" />
+                      <FontAwesome name={item.icon} size={12} color="#fbcf9c" />
                       <Text style={styles.itemTitle}>{item.title}</Text>
                     </View>
                   )}
@@ -141,18 +252,50 @@ const ProfilePage = () => {
               <Center w={windowWidth - 30} mt={2}>
                 <View style={styles.palette}>
                     <View>
-                      <Text style={styles.LabelTitle}>home</Text>
-                      <Text style={styles.LabelContent}>(123)-345 987 234</Text>
-                      <Divider bg="#f2f2f7" thickness="1" mx="2" orientation="horizontal" />
+                        <HStack justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                            <Text style={styles.LabelTitle}>home</Text>
+                        </HStack>
+
+                        <TouchableOpacity onPress={() => copyToClipboard('(123)-345 987 235', 'home')}>
+                          <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                              <Text style={styles.LabelContent}>(123)-345 987 235</Text>
+                              <View style={styles.Clipbox}>
+                              {copiedHome === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
+                              </View>
+                          </HStack>
+                        </TouchableOpacity>
                     </View>
+
                     <View>
-                      <Text style={styles.LabelTitle}>mobile</Text>
-                      <Text style={styles.LabelContent}>(123)-345 987 234</Text>
-                      <Divider bg="#f2f2f7" thickness="1" mx="2" orientation="horizontal" />
+                        <HStack justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                            <Text style={styles.LabelTitle}>mobile</Text>
+                        </HStack>
+
+                        <TouchableOpacity onPress={() => copyToClipboard('(123)-345 987 235', 'mobile')}>
+                          <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                              <Text style={styles.LabelContent}>(123)-345 987 235</Text>
+                              <View style={styles.Clipbox}>
+                              {copiedMobile === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
+                              </View>
+                          </HStack>
+                        </TouchableOpacity>
+                        
                     </View>
+
                     <View>
-                      <Text style={styles.LabelTitle}>work</Text>
-                      <Text style={styles.LabelContent}>(123)-345 987 234</Text>
+                        <HStack justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                            <Text style={styles.LabelTitle}>work</Text>
+                        </HStack>
+
+                        <TouchableOpacity onPress={() => copyToClipboard('(123)-345 987 235', 'work')}>
+                          <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                              <Text style={styles.LabelContent}>(123)-345 987 235</Text>
+                              <View style={styles.Clipbox}>
+                              {copiedWork === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
+                              </View>
+                          </HStack>
+                        </TouchableOpacity>
+                        
                     </View>
                 </View>
               </Center>
@@ -160,8 +303,20 @@ const ProfilePage = () => {
               <Center w={windowWidth - 30} mt={2}>
                 <View style={styles.palette}>
                     <View>
-                      <Text style={styles.LabelTitle}>Email</Text>
-                      <Text style={styles.LabelContent}>kymani.emmanuel@gmail.com</Text>
+                        <HStack justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                            <Text style={styles.LabelTitle}>email</Text>
+                        </HStack>
+
+                      <TouchableOpacity onPress={() => copyToClipboard('kymani.emmanuel@gmail.com', 'email')}>
+                        <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                            <Text style={styles.LabelContent}>kymani.emmanuel@gmail.com</Text>
+                            <View style={styles.Clipbox}>
+                              {copiedEmail === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
+                            </View>
+                        </HStack>
+                      </TouchableOpacity>
+                       
+
                     </View>
                 </View>
               </Center>
@@ -169,18 +324,42 @@ const ProfilePage = () => {
               <Center w={windowWidth - 30} mt={2}>
                 <View style={styles.palette}>
                     <View>
-                      <Text style={styles.LabelTitle}>home</Text>
-                      <Text style={styles.LabelContent}>(123)-345 987 234</Text>
-                      <Divider bg="#f2f2f7" thickness="1" mx="2" orientation="horizontal" />
+                        <HStack justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                            <Text style={styles.LabelTitle}>home</Text>
+                        </HStack>
+
+                        <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                            <Text style={styles.LabelContent}>(123)-345 987 235</Text>
+                            <View style={styles.Clipbox}>
+                              <Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />
+                            </View>
+                        </HStack>
                     </View>
+
                     <View>
-                      <Text style={styles.LabelTitle}>mobile</Text>
-                      <Text style={styles.LabelContent}>(123)-345 987 234</Text>
-                      <Divider bg="#f2f2f7" thickness="1" mx="2" orientation="horizontal" />
+                        <HStack justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                            <Text style={styles.LabelTitle}>mobile</Text>
+                        </HStack>
+
+                        <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                            <Text style={styles.LabelContent}>(123)-345 987 235</Text>
+                            <View style={styles.Clipbox}>
+                              <Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />
+                            </View>
+                        </HStack>
                     </View>
+
                     <View>
-                      <Text style={styles.LabelTitle}>work</Text>
-                      <Text style={styles.LabelContent}>(123)-345 987 234</Text>
+                        <HStack justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                            <Text style={styles.LabelTitle}>work</Text>
+                        </HStack>
+
+                        <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                            <Text style={styles.LabelContent}>(123)-345 987 235</Text>
+                            <View style={styles.Clipbox}>
+                              <Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />
+                            </View>
+                        </HStack>
                     </View>
                 </View>
               </Center>
@@ -241,7 +420,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 16,
     fontFamily: "Roboto_300Light",
-    color: "#000",
+    color: "#fbcf9c",
     marginTop: 10,
   },
   bio: {
@@ -253,11 +432,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     fontFamily: "Roboto_500Medium",
-    color: "#0085f7",
+    color: "#fbcf9c",
     marginLeft: 10,
   },
   itemContainer: {
-    backgroundColor: '#FFF',
+    backgroundColor: '#2e2a25',
     borderRadius: 5,
     padding: 10,
     justifyContent: 'center',
@@ -271,24 +450,25 @@ const styles = StyleSheet.create({
   itemTitle: {
     fontFamily: "Roboto_100Thin",
     fontSize: 10,
-    color: "#0085f7",
+    color: "#fbcf9c",
   },
   palette: {
     width: "100%",
-    // height: 200,
-    paddingVertical: 10,
-    backgroundColor: '#FFF',
-    borderRadius: 10,
-    // padding: 10,
-    // shadowColor: "#8d8d8d",
-    // shadowOffset: { width: -5, height: 5},
-    // shadowOpacity: .4,
-    // shadowRadius: 3,
-    // elevation: 2,
+    paddingBottom: 10,
+    paddingTop: 5,
+    paddingHorizontal: 10,
+    backgroundColor: '#2e2a25',
+    borderRadius: 5,
+    padding: 10,
+    shadowColor: "#8d8d8d",
+    shadowOffset: { width: -5, height: 5},
+    shadowOpacity: .4,
+    shadowRadius: 3,
+    elevation: 6,
   },
   LabelTitle: {
     fontFamily: 'Roboto_400Regular',
-    color: '#000',
+    color: '#fbcf9c',
     fontSize: 12,
     marginHorizontal: 5,
     marginBottom: 1,
@@ -296,11 +476,32 @@ const styles = StyleSheet.create({
   },
   LabelContent: {
     fontFamily: 'Roboto_300Light',
-    color: '#0085f7',
+    color: '#dedede',
     fontSize: 12,
+    height: 20,
     letterSpacing: 1,
-    margin: 5
-  }
+    margin: 5,
+    backgroundColor: '#201d1a',
+    borderBottomLeftRadius: 3,
+    borderTopLeftRadius: 3,
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    flex: 1,
+  },
+  Clipbox: {
+    width: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#201d1a',
+    borderTopRightRadius: 3,
+    borderBottomRightRadius: 3,
+    borderColor: '#151310',
+    borderWidth: 1,
+    position: 'relative',
+    left: -5,
+  },
+  
 });
 
 export default ProfilePage;
