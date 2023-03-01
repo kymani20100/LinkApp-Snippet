@@ -1,12 +1,26 @@
-// import React, { useState } from 'react';
-// import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+// import React, { useState, useRef } from 'react';
+// import { View, Text, TouchableOpacity, StyleSheet, Animated } from 'react-native';
 
 // const Accordion = ({ title, content }) => {
 //   const [expanded, setExpanded] = useState(false);
+//   const animation = useRef(new Animated.Value(0)).current;
 
 //   const handlePress = () => {
-//     setExpanded(!expanded);
+//     const toValue = expanded ? 0 : 1;
+
+//     Animated.timing(animation, {
+//       toValue,
+//       duration: 300,
+//       useNativeDriver: false,
+//     }).start(() => {
+//       setExpanded(!expanded);
+//     });
 //   };
+
+//   const contentHeight = animation.interpolate({
+//     inputRange: [0, 1],
+//     outputRange: [0, 80], // set the height of the content here
+//   });
 
 //   return (
 //     <View style={styles.container}>
@@ -14,9 +28,9 @@
 //         <Text style={styles.title}>{title}</Text>
 //         <Text style={styles.icon}>{expanded ? '-' : '+'}</Text>
 //       </TouchableOpacity>
-//       <View>
-//         {expanded && <Text style={styles.content}>{content}</Text>}
-//       </View>
+//       <Animated.View style={{ height: contentHeight, overflow: 'hidden' }}>
+//         <View style={styles.content}>{content}</View>
+//       </Animated.View>
 //     </View>
 //   );
 // };
@@ -46,8 +60,7 @@
 //     fontWeight: 'bold',
 //   },
 //   content: {
-//     paddingVertical: 10,
-//     paddingHorizontal: 5,
+//     padding: 10,
 //   },
 // });
 
@@ -58,6 +71,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Animated } from 'react-native
 
 const Accordion = ({ title, content }) => {
   const [expanded, setExpanded] = useState(false);
+  const [contentHeight, setContentHeight] = useState(0);
   const animation = useRef(new Animated.Value(0)).current;
 
   const handlePress = () => {
@@ -72,9 +86,14 @@ const Accordion = ({ title, content }) => {
     });
   };
 
-  const contentHeight = animation.interpolate({
+  const handleContentLayout = event => {
+    const { height } = event.nativeEvent.layout;
+    setContentHeight(height);
+  };
+
+  const contentHeightInterpolate = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 200], // set the height of the content here
+    outputRange: [0, contentHeight],
   });
 
   return (
@@ -83,7 +102,10 @@ const Accordion = ({ title, content }) => {
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.icon}>{expanded ? '-' : '+'}</Text>
       </TouchableOpacity>
-      <Animated.View style={{ height: contentHeight, overflow: 'hidden' }}>
+      <Animated.View
+        style={{ height: contentHeightInterpolate, overflow: 'hidden' }}
+        onLayout={handleContentLayout}
+      >
         <View style={styles.content}>{content}</View>
       </Animated.View>
     </View>
@@ -120,4 +142,5 @@ const styles = StyleSheet.create({
 });
 
 export default Accordion;
+
 
