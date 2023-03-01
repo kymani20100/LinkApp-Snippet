@@ -1,167 +1,35 @@
 import React from "react";
 
-export const data = [{
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    fullName: "Aafreen Khan",
-    timeStamp: "12:47 PM",
-    recentText: "0568123456",
-    background: "#fd6a63",
-    column: "#f75b53",
-    avatarUrl: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-  }, {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    fullName: "Sujitha Mathur",
-    timeStamp: "11:11 PM",
-    recentText: "0568123456",
-    background: "#7857ee",
-    column: "#6641eb",
-    avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEaZqT3fHeNrPGcnjLLX1v_W4mvBlgpwxnA&usqp=CAU"
-  }, {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    fullName: "Anci Barroco",
-    timeStamp: "6:22 PM",
-    recentText: "0568123456",
-    background: "#fd8e60",
-    column: "#fc7f4b",
-    avatarUrl: "https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg"
-  }, {
-    id: "68694a0f-3da1-431f-bd56-142371e29d72",
-    fullName: "Aniket Kumar",
-    timeStamp: "8:56 PM",
-    recentText: "0568123456",
-    background: "#27c2fb",
-    column: "#24b1e5",
-    avatarUrl: "https://i.pinimg.com/564x/2d/4c/e6/2d4ce6b7692d6a01acba104716a3a359.jpg"
-  }, {
-    id: "28694a0f-3da1-471f-bd96-142456e29d72",
-    fullName: "Kiara",
-    timeStamp: "12:47 PM",
-    recentText: "0568123456",
-    background: "#5666fa",
-    column: "#4455fa",
-    avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwgu1A5zgPSvfE83nurkuzNEoXs9DMNr8Ww&usqp=CAU"
-  }, {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63d",
-    fullName: "Sujitha Mathur",
-    timeStamp: "11:11 PM",
-    recentText: "0568123456",
-    background: "#134870",
-    column: "#103c5e",
-    avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEaZqT3fHeNrPGcnjLLX1v_W4mvBlgpwxnA&usqp=CAU"
-  }, {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72l",
-    fullName: "Anci Barroco",
-    timeStamp: "6:22 PM",
-    recentText: "0568123456",
-    background: "#01363a",
-    column: "#012b2e",
-    avatarUrl: "https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg"
-  }, {
-    id: "68694a0f-3da1-431f-bd56-142371e29d72jj",
-    fullName: "Aniket Kumar",
-    timeStamp: "8:56 PM",
-    recentText: "0568123456",
-    background: "#156042",
-    column: "#114c34",
-    avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr01zI37DYuR8bMV5exWQBSw28C1v_71CAh8d7GP1mplcmTgQA6Q66Oo--QedAN1B4E1k&usqp=CAU"
-  }, {
-    id: "28694a0f-3da1-471f-bd96-142456e29d72gt",
-    fullName: "Kiara",
-    timeStamp: "12:47 PM",
-    recentText: "0568123456",
-    background: "#ac5f17",
-    column: "#975314",
-    avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwgu1A5zgPSvfE83nurkuzNEoXs9DMNr8Ww&usqp=CAU"
-}, {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63y",
-    fullName: "Sujitha Mathur",
-    timeStamp: "11:11 PM",
-    recentText: "0568123456",
-    background: "#8b232a",
-    column: "#6e1c21",
-    avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEaZqT3fHeNrPGcnjLLX1v_W4mvBlgpwxnA&usqp=CAU"
-  }, {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72u",
-    fullName: "Anci Barroco",
-    timeStamp: "6:22 PM",
-    recentText: "0568123456",
-    background: "#a91897",
-    column: "#941584",
-    avatarUrl: "https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg"
-  }, {
-    id: "68694a0f-3da1-431f-bd56-142371e29d72i",
-    fullName: "Aniket Kumar",
-    timeStamp: "8:56 PM",
-    recentText: "0568123456",
-    background: "#335c5e",
-    column: "#264547",
-    avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr01zI37DYuR8bMV5exWQBSw28C1v_71CAh8d7GP1mplcmTgQA6Q66Oo--QedAN1B4E1k&usqp=CAU"
-  }, {
-    id: "28694a0f-3da1-471f-bd96-142456e29d72o",
-    fullName: "Kiara",
-    timeStamp: "12:47 PM",
-    recentText: "0568123456",
-    background: "#d22253",
-    column: "#bb1d49",
-    avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwgu1A5zgPSvfE83nurkuzNEoXs9DMNr8Ww&usqp=CAU"
-  },
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28baaq",
-    fullName: "Aafreen Khan",
-    timeStamp: "12:47 PM",
-    recentText: "0568123456",
-    background: "#c5291a",
-    column: "#af2517",
-    avatarUrl: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-  }, {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63ds",
-    fullName: "Sujitha Mathur",
-    timeStamp: "11:11 PM",
-    recentText: "0568123456",
-    background: "#04833c",
-    column: "#02672f",
-    avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEaZqT3fHeNrPGcnjLLX1v_W4mvBlgpwxnA&usqp=CAU"
-  }, {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72lk",
-    fullName: "Anci Barroco",
-    timeStamp: "6:22 PM",
-    recentText: "0568123456",
-    background: "#018077",
-    column: "#01665f",
-    avatarUrl: "https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg"
-  }, {
-    id: "68694a0f-3da1-431f-bd56-142371e29d72jp",
-    fullName: "Aniket Kumar",
-    timeStamp: "8:56 PM",
-    recentText: "0568123456",
-    background: "#0e71cf",
-    column: "#0c5eac",
-    avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr01zI37DYuR8bMV5exWQBSw28C1v_71CAh8d7GP1mplcmTgQA6Q66Oo--QedAN1B4E1k&usqp=CAU"
-  }, {
-    id: "28694a0f-3da1-471f-bd96-142456e29d72gv",
-    fullName: "Kiara",
-    timeStamp: "12:47 PM",
-    recentText: "0568123456",
-    background: "#794400",
-    column: "#5a3301",
-    avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwgu1A5zgPSvfE83nurkuzNEoXs9DMNr8Ww&usqp=CAU"
-}, {
-  id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-  fullName: "Sujitha Mathur",
-  timeStamp: "11:11 PM",
-  recentText: "0568123456",
-  background: "#003d7a",
-  column: "#01305e",
-  avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEaZqT3fHeNrPGcnjLLX1v_W4mvBlgpwxnA&usqp=CAU"
-}, {
-  id: "58694a0f-3da1-471f-bd96-145571e29d72",
-  fullName: "Anci Barroco",
-  timeStamp: "6:22 PM",
-  recentText: "0568123456",
-  background: "#f35963",
-  column: "#de3843",
-  avatarUrl: "https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg"
-}];
+export const DATA = [
+  { id: "1", name: "Alice Wonderland", phone: "111-111-1111" },
+  { id: "27", name: "Alice Jones", phone: "111-111-1111" },
+  { id: "28", name: "Ashley Beifer", phone: "111-111-1111" },
+  { id: "2", name: "Bob Marley", phone: "222-222-2222" },
+  { id: "3", name: "Charlie Murphy", phone: "333-333-3333" },
+  { id: "4", name: "David Berker", phone: "444-444-4444" },
+  { id: "5", name: "Eva Longoria", phone: "555-555-5555" },
+  { id: "6", name: "Frank Dune", phone: "666-666-6666" },
+  { id: "7", name: "George Coke", phone: "777-777-7777" },
+  { id: "8", name: "Harry Styles", phone: "888-888-8888" },
+  { id: "9", name: "Isabelle Riez", phone: "999-999-9999" },
+  { id: "10", name: "Jack Brown", phone: "111-222-3333" },
+  { id: "11", name: "Karen Martinez", phone: "444-555-6666" },
+  { id: "12", name: "Liam Neeson", phone: "777-888-9999" },
+  { id: "13", name: "Mike Tyson", phone: "111-444-7777" },
+  { id: "14", name: "Nancy Pelosi", phone: "222-555-8888" },
+  { id: "15", name: "Oliver Wilde", phone: "333-666-9999" },
+  { id: "16", name: "Paul Mccauthney", phone: "111-555-9999" },
+  { id: "17", name: "Queenie Seina", phone: "222-666-1111" },
+  { id: "18", name: "Robert Denero", phone: "333-777-2222" },
+  { id: "19", name: "Sam George", phone: "444-888-3333" },
+  { id: "20", name: "Tina Fey", phone: "555-999-4444" },
+  { id: "21", name: "Uma Omar", phone: "666-111-5555" },
+  { id: "22", name: "Vera Velvet", phone: "777-222-6666" },
+  { id: "23", name: "William Defoe", phone: "888-333-7777" },
+  { id: "24", name: "Xavier William", phone: "999-444-8888" },
+  { id: "25", name: "Yara Abdul", phone: "111-666-1111" },
+  { id: "26", name: "Zoe Saldana", phone: "222-777-2222" },
+];
 
 export const icons = [{
     name: 'bolt',

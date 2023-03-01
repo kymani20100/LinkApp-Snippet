@@ -123,6 +123,10 @@ import ContactScreen from "./screens/ContactScreen";
 import StartScreen from "./screens/StartScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 
+// redux
+import { Provider } from 'react-redux';
+import store from "./store/store";
+
 // Revised
 import Contacts from "./screens/Contacts";
 
@@ -247,21 +251,23 @@ export default function App() {
   return (
     <>
       {showRealApp ? (
-        <ThemeProvider theme={theme}>
-          <NativeBaseProvider>
-            <PaperProvider>
-              <NavigationContainer>
-                <Stack.Navigator>
-                  <Stack.Screen options={{ headerShown: false }} name="Home" component={Contacts} />
-                  <Stack.Screen options={{ headerShown: false }} name="SignUp" component={SignUpScreen} />
-                  <Stack.Screen options={{ headerShown: false }} name="Profile" component={ProfilePage} />
-                  <Stack.Screen options={{ headerShown: false }} name="Pinterest" component={Pinterest} />
-                </Stack.Navigator>
-                <Toast config={toastConfig} />
-              </NavigationContainer>
-            </PaperProvider>
-          </NativeBaseProvider>
-        </ThemeProvider>
+        <Provider store={store}>
+            <ThemeProvider theme={theme}>
+              <NativeBaseProvider>
+                <PaperProvider>
+                  <NavigationContainer>
+                    <Stack.Navigator>
+                      <Stack.Screen options={{ headerShown: false }} name="Home" component={Contacts} />
+                      <Stack.Screen options={{ headerShown: false }} name="SignUp" component={SignUpScreen} />
+                      <Stack.Screen options={{ headerShown: false }} name="Profile" component={ProfilePage} />
+                      <Stack.Screen options={{ headerShown: false }} name="Pinterest" component={Pinterest} />
+                    </Stack.Navigator>
+                    <Toast config={toastConfig} />
+                  </NavigationContainer>
+                </PaperProvider>
+              </NativeBaseProvider>
+            </ThemeProvider>
+        </Provider>
       ) : (
         <AppIntroSlider
           data={slides}

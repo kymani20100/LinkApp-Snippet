@@ -1,46 +1,12 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-  Dimensions,
-  Vibration
-} from "react-native";
-import {
-  Actionsheet,
-  Center,
-  useDisclose,
-  Button,
-  Box,
-  HStack,
-  Avatar,
-  VStack,
-  IconButton,
-  Icon,
-  Progress,
-  Heading,
-  Divider,
-  Flex
-} from "native-base";
-import {
-  Ionicons,
-  MaterialCommunityIcons,
-  MaterialIcons,
-  Fontisto,
-  Entypo,
-  FontAwesome,
-  Octicons,
-} from "@expo/vector-icons";
+import {View,Text,ScrollView,Image,StyleSheet,TouchableOpacity,FlatList,Dimensions,Vibration} from "react-native";
+import {Actionsheet,Center,useDisclose,Box,HStack,Avatar,VStack,IconButton,Icon} from "native-base";
+import {Ionicons,FontAwesome,Octicons} from "@expo/vector-icons";
 
 import * as Clipboard from 'expo-clipboard';
 import Toast from 'react-native-toast-message';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
 const DATA = [
   { id: '1', title: 'Call', icon: 'phone', },
@@ -48,9 +14,10 @@ const DATA = [
   { id: '3', title: 'Share', icon: 'qrcode', },
 ];
 
-const ProfilePage = ({route,navigation}) => {
+const ProfilePage = ({route}) => {
+  const navigation = useNavigation();
 
-  const { itemId, items } = route.params;
+  const { itemId, Params } = route.params;
   const [copiedText, setCopiedText] = useState('');
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedHome, setCopiedHome] = useState(false);
@@ -177,17 +144,9 @@ const ProfilePage = ({route,navigation}) => {
     <VStack bg="#201d1a" flex={1}>
       <StatusBar bg="#2e2a25" barStyle="light-content" />
       <Box safeAreaTop bg="#2e2a25" />
-      <HStack
-        bg="#2e2a25"
-        px="1"
-        py="0"
-        justifyContent="space-between"
-        alignItems="center"
-        w="100%"
-        maxW="350"
-      >
+      <HStack bg="#2e2a25" px="1" py="0" justifyContent="space-between" alignItems="center" w="100%" maxW="350">
         <HStack alignItems="center">
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <IconButton
               icon={
                 <Icon
@@ -228,7 +187,7 @@ const ProfilePage = ({route,navigation}) => {
             <Box w="90%" maxW="400">
 
               <HStack px="3" justifyContent="center" alignItems="center" w="100%" maxW="350">
-                  <Text style={styles.name}>{items.name}</Text>
+                  <Text style={styles.name}>{Params.name}</Text>
                   <Image source={require('../assets/img/icons/verify.png')} style={{width: 15, height: 15, marginLeft: 5, marginTop: 10}} />
               </HStack>
               
