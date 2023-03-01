@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import {View,Text,ScrollView,Image,StyleSheet,TouchableOpacity,FlatList,Dimensions,Vibration} from "react-native";
 import {Actionsheet,Center,useDisclose,Box,HStack,Avatar,VStack,IconButton,Icon} from "native-base";
 import {Ionicons,FontAwesome,Octicons} from "@expo/vector-icons";
+import { ListItem } from '@rneui/themed';
+import Accordion from "../components/Accordion";
 
 import * as Clipboard from 'expo-clipboard';
 import Toast from 'react-native-toast-message';
@@ -14,6 +16,8 @@ const DATA = [
   { id: '3', title: 'Share', icon: 'qrcode', },
 ];
 
+
+
 const ProfilePage = ({route}) => {
   const navigation = useNavigation();
 
@@ -23,6 +27,28 @@ const ProfilePage = ({route}) => {
   const [copiedHome, setCopiedHome] = useState(false);
   const [copiedMobile, setCopiedMobile] = useState(false);
   const [copiedWork, setCopiedWork] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
+
+  const EmailComponent = () => {
+    return (
+      <View style={styles.accordionPalette}>
+          <View>
+              <HStack justifyContent={'space-between'} alignItems="center" w="100%">
+                  <Text style={styles.LabelTitle}>email</Text>
+              </HStack>
+  
+            <TouchableOpacity onPress={() => copyToClipboard('kymani.emmanuel@gmail.com', 'email')}>
+              <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                  <Text style={styles.LabelContent}>kymani.emmanuel@gmail.com</Text>
+                  <View style={styles.Clipbox}>
+                    {copiedEmail === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
+                  </View>
+              </HStack>
+            </TouchableOpacity>
+          </View>
+      </View>
+    );
+  }
 
   const copyToClipboard = async (term, field) => {
     const result = await Clipboard.setStringAsync(term);
@@ -274,53 +300,12 @@ const ProfilePage = ({route}) => {
                             </View>
                         </HStack>
                       </TouchableOpacity>
-                       
-
                     </View>
                 </View>
               </Center>
 
               <Center w={windowWidth - 30} mt={2}>
-                <View style={styles.palette}>
-                    <View>
-                        <HStack justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                            <Text style={styles.LabelTitle}>home</Text>
-                        </HStack>
-
-                        <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                            <Text style={styles.LabelContent}>(123)-345 987 235</Text>
-                            <View style={styles.Clipbox}>
-                              <Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />
-                            </View>
-                        </HStack>
-                    </View>
-
-                    <View>
-                        <HStack justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                            <Text style={styles.LabelTitle}>mobile</Text>
-                        </HStack>
-
-                        <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                            <Text style={styles.LabelContent}>(123)-345 987 235</Text>
-                            <View style={styles.Clipbox}>
-                              <Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />
-                            </View>
-                        </HStack>
-                    </View>
-
-                    <View>
-                        <HStack justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                            <Text style={styles.LabelTitle}>work</Text>
-                        </HStack>
-
-                        <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                            <Text style={styles.LabelContent}>(123)-345 987 235</Text>
-                            <View style={styles.Clipbox}>
-                              <Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />
-                            </View>
-                        </HStack>
-                    </View>
-                </View>
+                <Accordion title="Professional Details" content={<EmailComponent />} />
               </Center>
 
           </Center>
@@ -413,6 +398,22 @@ const styles = StyleSheet.create({
   },
   palette: {
     width: "100%",
+    // height: 50,
+    paddingBottom: 10,
+    paddingTop: 5,
+    paddingHorizontal: 10,
+    backgroundColor: '#2e2a25',
+    borderRadius: 5,
+    padding: 10,
+    shadowColor: "#8d8d8d",
+    shadowOffset: { width: -5, height: 5},
+    shadowOpacity: .4,
+    shadowRadius: 3,
+    elevation: 6,
+  },
+  accordionPalette: {
+    width: "100%",
+    height: 60,
     paddingBottom: 10,
     paddingTop: 5,
     paddingHorizontal: 10,
@@ -429,6 +430,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto_400Regular',
     color: '#fbcf9c',
     fontSize: 12,
+    height: 30,
     marginHorizontal: 5,
     marginBottom: 1,
     marginTop: 2

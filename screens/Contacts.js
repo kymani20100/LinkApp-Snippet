@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import {View, Text, TextInput, Image, TouchableOpacity, Vibration, Animated, Easing, useWindowDimensions, SectionList, StyleSheet, Linking, Keyboard, LayoutAnimation} from "react-native";
 import { FloatingAction } from "react-native-floating-action";
 import { Pressable, Actionsheet, Center, useDisclose, HStack, VStack, Icon, Box, IconButton, Button, Badge } from "native-base";
@@ -53,6 +53,7 @@ const Contacts = ({navigation}) => {
 
     const handleRefresh = () => {
       console.log('From within the belly of the beast');
+      Vibration.vibrate(100);
       dispatch(clearItems());
       setRefreshing(true);
       // Perform any refresh logic here
@@ -63,16 +64,6 @@ const Contacts = ({navigation}) => {
         const data = items.join(',');
         return <QRCode value={data} size={200} />;
     };
-
-    // CLEAR THE ITEM
-    // const handleClearItems = () => {
-    //   console.log('From within the belly of the beast');
-    //   dispatch(clearItems());
-    //   setRefreshing(true);
-    //   // Perform any refresh logic here
-    //   setRefreshing(false);
-    // };
-    // GENERATION
 
     // THIS IS FOR THE TAB FLOATING
   const { width } = useWindowDimensions();
@@ -112,7 +103,27 @@ const Contacts = ({navigation}) => {
     }
   };
 
-  const handleAlphabetClick = (index) => {
+  // const handleAlphabetClick = (index) => {
+  //   setSelectedAlphabet(index);
+  //   const matchingItemIndex = DATA.findIndex((item) =>
+  //     item.name.toUpperCase().startsWith(String.fromCharCode(65 + index))
+  //   );
+  //   if (matchingItemIndex === -1) {
+  //     return;
+  //   }
+  //   const sectionIndex = sections.findIndex(
+  //     (section) => section.data[0].id === DATA[matchingItemIndex].id
+  //   );
+  //   if (sectionIndex !== -1) {
+  //     sectionListRef.current.scrollToLocation({
+  //       sectionIndex: sectionIndex,
+  //       itemIndex: 0,
+  //       viewOffset: 0,
+  //     });
+  //   }
+  // };
+
+  const handleAlphabetClick = useCallback((index) => {
     setSelectedAlphabet(index);
     const matchingItemIndex = DATA.findIndex((item) =>
       item.name.toUpperCase().startsWith(String.fromCharCode(65 + index))
@@ -130,28 +141,51 @@ const Contacts = ({navigation}) => {
         viewOffset: 0,
       });
     }
-  };
+  }, []);
 
   // Filter
-  const filteredData = DATA.filter((item) =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredData = DATA.filter((item) =>
+  //   item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
-  const sections = [];
-  const dataBySection = {};
-  filteredData.forEach((item) => {
-    const sectionTitle = item.name[0].toUpperCase();
-    if (!dataBySection[sectionTitle]) {
-      dataBySection[sectionTitle] = [];
-      sections.push({
-        title: sectionTitle,
-        data: dataBySection[sectionTitle],
-      });
-    }
-    dataBySection[sectionTitle].push(item);
-  });
+  const filteredData = useMemo(() => {
+    return DATA.filter((item) =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [searchTerm]);
 
-  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  // const sections = [];
+  // const dataBySection = {};
+  // filteredData.forEach((item) => {
+  //   const sectionTitle = item.name[0].toUpperCase();
+  //   if (!dataBySection[sectionTitle]) {
+  //     dataBySection[sectionTitle] = [];
+  //     sections.push({
+  //       title: sectionTitle,
+  //       data: dataBySection[sectionTitle],
+  //     });
+  //   }
+  //   dataBySection[sectionTitle].push(item);
+  // });
+  
+
+  const sections = useMemo(() => {
+    const dataBySection = {};
+    filteredData.forEach((item) => {
+      const sectionTitle = item.name[0].toUpperCase();
+      if (!dataBySection[sectionTitle]) {
+        dataBySection[sectionTitle] = [];
+      }
+      dataBySection[sectionTitle].push(item);
+    });
+    return Object.keys(dataBySection).map((title) => ({
+      title,
+      data: dataBySection[title],
+    }));
+  }, [filteredData]);
+
+  // const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  const alphabet = useMemo(() => "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""), []);
 
   return (
     <VStack bg="#2e2a25" flex={1}>
@@ -207,8 +241,6 @@ const Contacts = ({navigation}) => {
             renderItem={({ item }) => (
               <Card props={item} />
             )}
-            // refreshing={refreshing}
-            // onRefresh={handleRefresh}
             onScroll={onScroll}
             renderSectionHeader={({ section }) => (
             <View style={styles.sectionHeader}>
