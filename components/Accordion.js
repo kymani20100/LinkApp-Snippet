@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Animated, Image, Vibration } from 'react-native';
-import {MaterialIcons} from "@expo/vector-icons";
+import {MaterialIcons, FontAwesome, AntDesign} from "@expo/vector-icons";
 import {IconButton,Icon} from "native-base";
 
 const Accordion = ({ title, content, height }) => {
@@ -29,7 +29,8 @@ const Accordion = ({ title, content, height }) => {
       <TouchableOpacity style={styles.titleContainer} onPress={handlePress}>
 
           <View style={styles.imageBackground}>
-            <Image source={require('../assets/img/social/verify.png')} style={{width: 15, height: 15}} />
+            {/* <Image source={require('../assets/img/social/verify.png')} style={{width: 15, height: 15}} /> */}
+            <AntDesign name="star" size={16} color="#ffc107" />
           </View>
         
         <Text style={[styles.title]}>{title}</Text>
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
 
   },
   content: {
-    padding: 10,
+    padding: 3,
   },
 });
 

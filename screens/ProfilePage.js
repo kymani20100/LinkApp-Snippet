@@ -1,8 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import {View,Text,ScrollView,Image,StyleSheet,TouchableOpacity,FlatList,Dimensions,Vibration} from "react-native";
-import {Pressable,Actionsheet,Center,useDisclose,Box,HStack,Avatar,VStack,IconButton,Icon} from "native-base";
-import {Ionicons,FontAwesome,Octicons,AntDesign} from "@expo/vector-icons";
+import {Divider,Actionsheet,Center,useDisclose,Box,HStack,Avatar,VStack,IconButton,Icon} from "native-base";
+import {Ionicons,FontAwesome,Entypo,AntDesign} from "@expo/vector-icons";
 import { Button } from "react-native-paper";
 import Accordion from "../components/Accordion";
 
@@ -221,13 +221,25 @@ const ProfilePage = ({route}) => {
               <HStack px="3" justifyContent="center" alignItems="center" w="100%" maxW="350">
                   <Text style={styles.name}>{Params.name}</Text>
                   <Image source={require('../assets/img/social/verify.png')} style={{width: 12, height: 12, marginLeft: 5, marginTop: 8}} />
+
               </HStack>
 
               <HStack px="3" justifyContent="center" alignItems="center" w="100%" maxW="350">
-                  <Text style={styles.subName}>Linked</Text>
-                  <View style={styles.imageBackground}>
-                    <Image source={require('../assets/img/social/broken-link.png')} style={{width: 10, height: 10}} />
+
+                  <View style={styles.EditName}>
+                    <Text style={styles.Edit}> <Entypo name="edit" size={15} color="#fbcf9c" /> Edit</Text>
                   </View>
+
+                  <Divider height={6} orientation="vertical" ml="3" mr="2" mt="2" _light={{
+                      bg: "muted.800"
+                    }} _dark={{
+                      bg: "muted.50"
+                    }} />
+
+                  <View style={styles.EditName}>
+                    <Text style={styles.Edit}>  <Image source={require('../assets/img/social/broken-link.png')} style={{width: 10, height: 10}} /> Linked</Text>
+                  </View>
+
               </HStack>
               
             </Box>
@@ -247,77 +259,10 @@ const ProfilePage = ({route}) => {
                     </TouchableOpacity>
                   )}
                 />
+
               </Center>
 
-              {/* <Center w={windowWidth - 30} mt={2}>
-                <View style={styles.palette}>
-                    <View>
-                        <HStack justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                            <Text style={styles.LabelTitle}>home</Text>
-                        </HStack>
-
-                        <TouchableOpacity onPress={() => copyToClipboard('(123)-345 987 235', 'home')}>
-                          <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                              <Text style={styles.LabelContent}>(123)-345 987 235</Text>
-                              <View style={styles.Clipbox}>
-                              {copiedHome === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
-                              </View>
-                          </HStack>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View>
-                        <HStack justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                            <Text style={styles.LabelTitle}>mobile</Text>
-                        </HStack>
-
-                        <TouchableOpacity onPress={() => copyToClipboard('(123)-345 987 235', 'mobile')}>
-                          <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                              <Text style={styles.LabelContent}>(123)-345 987 235</Text>
-                              <View style={styles.Clipbox}>
-                              {copiedMobile === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
-                              </View>
-                          </HStack>
-                        </TouchableOpacity>
-                        
-                    </View>
-
-                    <View>
-                        <HStack justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                            <Text style={styles.LabelTitle}>work</Text>
-                        </HStack>
-
-                        <TouchableOpacity onPress={() => copyToClipboard('(123)-345 987 235', 'work')}>
-                          <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                              <Text style={styles.LabelContent}>(123)-345 987 235</Text>
-                              <View style={styles.Clipbox}>
-                              {copiedWork === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
-                              </View>
-                          </HStack>
-                        </TouchableOpacity>
-                        
-                    </View>
-                </View>
-              </Center> */}
-
-              {/* <Center w={windowWidth - 30} mt={2}>
-                <View style={styles.palette}>
-                    <View>
-                        <HStack justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                            <Text style={styles.LabelTitle}>email</Text>
-                        </HStack>
-
-                      <TouchableOpacity onPress={() => copyToClipboard('kymani.emmanuel@gmail.com', 'email')}>
-                        <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                            <Text style={styles.LabelContent}>kymani.emmanuel@gmail.com</Text>
-                            <View style={styles.Clipbox}>
-                              {copiedEmail === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
-                            </View>
-                        </HStack>
-                      </TouchableOpacity>
-                    </View>
-                </View>
-              </Center> */}
+              <Divider my="2" _light={{bg: "muted.800"}} _dark={{ bg: "muted.50"}} />
 
               <Center flex={1} w={windowWidth - 30} mt={0.3}>
                   <Accordion 
@@ -415,6 +360,23 @@ const styles = StyleSheet.create({
     color: "#fbcf9c",
     marginTop: 5,
   },
+  EditName: {
+    marginLeft: 5,
+    marginTop: 5,
+    // paddingHorizontal: 8,
+    // paddingVertical: 3,
+    height: 25,
+    width: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#2e2a25',
+    borderRadius: 3
+  },
+  Edit: {
+    fontSize: 12,
+    fontFamily: "Roboto_300Light",
+    color: "#fbcf9c",
+  },
   subName: {
     fontSize: 12,
     fontFamily: "Roboto_300Light",
@@ -457,7 +419,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingTop: 5,
     paddingHorizontal: 10,
-    backgroundColor: '#2e2a25',
+    backgroundColor: '#2c2723',
     borderRadius: 5,
     padding: 10,
     // shadowColor: "#8d8d8d",
@@ -515,7 +477,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#201d1a',
     marginLeft: 2,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 8
   }
 });
 
