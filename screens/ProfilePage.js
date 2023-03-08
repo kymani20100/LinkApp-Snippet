@@ -1,13 +1,14 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import {View,Text,ScrollView,Image,StyleSheet,TouchableOpacity,FlatList,Dimensions,Vibration} from "react-native";
-import {Actionsheet,Center,useDisclose,Box,HStack,Avatar,VStack,IconButton,Icon} from "native-base";
-import {Ionicons,FontAwesome,Octicons} from "@expo/vector-icons";
-import { ListItem } from '@rneui/themed';
+import {Pressable,Actionsheet,Center,useDisclose,Box,HStack,Avatar,VStack,IconButton,Icon} from "native-base";
+import {Ionicons,FontAwesome,Octicons,AntDesign} from "@expo/vector-icons";
+import { Button } from "react-native-paper";
 import Accordion from "../components/Accordion";
 
+
 import * as Clipboard from 'expo-clipboard';
-import Toast from 'react-native-toast-message';
+import CustomToast from "../components/CustomToast";
 import { useNavigation } from '@react-navigation/native';
 
 const DATA = [
@@ -16,7 +17,9 @@ const DATA = [
   { id: '3', title: 'Share', icon: 'qrcode', },
 ];
 
-
+// FLATLIST WIDTH & MARGIN
+const ITEM_WIDTH = 70; // Change as needed
+const ITEM_MARGIN = 10; // Change as needed
 
 const ProfilePage = ({route}) => {
   const navigation = useNavigation();
@@ -31,21 +34,82 @@ const ProfilePage = ({route}) => {
 
   const EmailComponent = () => {
     return (
-      <View style={styles.accordionPalette}>
-          <View>
-              <HStack justifyContent={'space-between'} alignItems="center" w="100%">
-                  <Text style={styles.LabelTitle}>email</Text>
-              </HStack>
-  
-            <TouchableOpacity onPress={() => copyToClipboard('kymani.emmanuel@gmail.com', 'email')}>
-              <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                  <Text style={styles.LabelContent}>kymani.emmanuel@gmail.com</Text>
-                  <View style={styles.Clipbox}>
-                    {copiedEmail === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
-                  </View>
-              </HStack>
-            </TouchableOpacity>
-          </View>
+      <View style={styles.palette}>
+          <View style={{marginBottom: 10}}>
+            <HStack justifyContent={'space-between'} alignItems="center" w="100%">
+                <Text style={styles.LabelTitle}>email</Text>
+            </HStack>
+
+          <TouchableOpacity onPress={() => copyToClipboard('kymani.emmanuel@gmail.com', 'email')}>
+            <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                <Text style={styles.LabelContent}>kymani.emmanuel@gmail.com</Text>
+                <View style={styles.Clipbox}>
+                  {copiedEmail === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
+                </View>
+            </HStack>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{marginBottom: 10}}>
+            <HStack justifyContent={'space-between'} alignItems="center" w="100%">
+                <Text style={styles.LabelTitle}>email</Text>
+            </HStack>
+
+          <TouchableOpacity onPress={() => copyToClipboard('kymani.emmanuel@gmail.com', 'email')}>
+            <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                <Text style={styles.LabelContent}>kymani.emmanuel@gmail.com</Text>
+                <View style={styles.Clipbox}>
+                  {copiedEmail === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
+                </View>
+            </HStack>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{marginBottom: 10}}>
+            <HStack justifyContent={'space-between'} alignItems="center" w="100%">
+                <Text style={styles.LabelTitle}>email</Text>
+            </HStack>
+
+          <TouchableOpacity onPress={() => copyToClipboard('kymani.emmanuel@gmail.com', 'email')}>
+            <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                <Text style={styles.LabelContent}>kymani.emmanuel@gmail.com</Text>
+                <View style={styles.Clipbox}>
+                  {copiedEmail === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
+                </View>
+            </HStack>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{marginBottom: 10}}>
+            <HStack justifyContent={'space-between'} alignItems="center" w="100%">
+                <Text style={styles.LabelTitle}>email</Text>
+            </HStack>
+
+          <TouchableOpacity onPress={() => copyToClipboard('kymani.emmanuel@gmail.com', 'email')}>
+            <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                <Text style={styles.LabelContent}>kymani.emmanuel@gmail.com</Text>
+                <View style={styles.Clipbox}>
+                  {copiedEmail === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
+                </View>
+            </HStack>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{marginBottom: 10}}>
+            <HStack justifyContent={'space-between'} alignItems="center" w="100%">
+                <Text style={styles.LabelTitle}>email</Text>
+            </HStack>
+
+          <TouchableOpacity onPress={() => copyToClipboard('kymani.emmanuel@gmail.com', 'email')}>
+            <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
+                <Text style={styles.LabelContent}>kymani.emmanuel@gmail.com</Text>
+                <View style={styles.Clipbox}>
+                  {copiedEmail === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
+                </View>
+            </HStack>
+          </TouchableOpacity>
+        </View>
+         
       </View>
     );
   }
@@ -56,80 +120,29 @@ const ProfilePage = ({route}) => {
       if(field === 'email'){
         setCopiedEmail(true);
         Vibration.vibrate(100);
-          Toast.show({
-              type: 'success',
-              position: 'top',
-              text1: `${field} copied`,
-              text2: `Copied ${term} to Clipboard`,
-              visibilityTime: 4000,
-              autoHide: true,
-              topOffset: 30,
-              bottomOffset: 40,
-              onShow: () => {},
-              onHide: () => {}, // called when Toast hides (if `autoHide` was set to `true`)
-              onPress: () => {},
-              props: {} // any custom props passed to the Toast component
-          });
+        CustomToast({ field: 'Work', term: 'email', type: 'success' });
+          
         setTimeout(() => {
           setCopiedEmail(false);
         }, 5000);
       }else if (field === 'home'){
         setCopiedHome(true);
         Vibration.vibrate(100);
-        Toast.show({
-          type: 'success',
-          position: 'top',
-          text1: `${field} contact copied`,
-          text2: `Copied ${term} to Clipboard`,
-          visibilityTime: 4000,
-          autoHide: true,
-          topOffset: 30,
-          bottomOffset: 40,
-          onShow: () => {},
-          onHide: () => {}, // called when Toast hides (if `autoHide` was set to `true`)
-          onPress: () => {},
-          props: {} // any custom props passed to the Toast component
-      });
+        CustomToast({ field: 'Work', term: 'email', type: 'success' });
         setTimeout(() => {
           setCopiedHome(false);
         }, 5000);
       }else if (field === 'mobile'){
         setCopiedMobile(true);
         Vibration.vibrate(100);
-        Toast.show({
-          type: 'success',
-          position: 'top',
-          text1: `${field} contact copied`,
-          text2: `Copied ${term} to Clipboard`,
-          visibilityTime: 4000,
-          autoHide: true,
-          topOffset: 30,
-          bottomOffset: 40,
-          onShow: () => {},
-          onHide: () => {}, // called when Toast hides (if `autoHide` was set to `true`)
-          onPress: () => {},
-          props: {} // any custom props passed to the Toast component
-      });
+        CustomToast({ field: 'Work', term: 'email', type: 'success' });
         setTimeout(() => {
           setCopiedMobile(false);
         }, 5000);
       }else if (field === 'work'){
         setCopiedWork(true);
         Vibration.vibrate(100);
-        Toast.show({
-          type: 'success',
-          position: 'top',
-          text1: `${field} contact copied`,
-          text2: `Copied ${term} to Clipboard`,
-          visibilityTime: 4000,
-          autoHide: true,
-          topOffset: 30,
-          bottomOffset: 40,
-          onShow: () => {},
-          onHide: () => {}, // called when Toast hides (if `autoHide` was set to `true`)
-          onPress: () => {},
-          props: {} // any custom props passed to the Toast component
-      });
+        CustomToast({ field: 'Work', term: 'email', type: 'success' });
         setTimeout(() => {
           setCopiedWork(false);
         }, 5000);
@@ -154,7 +167,7 @@ const ProfilePage = ({route}) => {
       setScrollDirection(direction);
 
       if (direction === "up") {
-        setProfilePictureSize(30);
+        setProfilePictureSize(70);
       } else {
         setProfilePictureSize(70);
       }
@@ -163,29 +176,21 @@ const ProfilePage = ({route}) => {
 
   const { isOpen, onOpen, onClose } = useDisclose();
 
-  const ITEM_WIDTH = 70; // Change as needed
-  const ITEM_MARGIN = 10; // Change as needed
-
   return (
-    <VStack bg="#201d1a" flex={1}>
+    <VStack bg="#201d1a" flex={1} mt={-6}>
       <StatusBar bg="#2e2a25" barStyle="light-content" />
+      {/* <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#2e2a25" translucent = {true}/> */}
       <Box safeAreaTop bg="#2e2a25" />
-      <HStack bg="#2e2a25" px="1" py="0" justifyContent="space-between" alignItems="center" w="100%" maxW="350">
-        <HStack alignItems="center">
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <IconButton
-              icon={
-                <Icon
-                  as={Ionicons}
-                  name="ios-arrow-back"
-                  size="sm"
-                  color="#fbcf9c"
-                />
-              }
-            />
-          </TouchableOpacity>
+      
+      {/* <HStack bg="#2e2a25" px="1" py="0" justifyContent="space-between" alignItems="center" w="100%" maxW="350">
+        <HStack alignItems="flex-start">
 
-          <Text style={styles.selectedItems}>Contacts</Text>
+            <Pressable onPress={() => navigation.goBack()} rounded="2" height={25} maxW="96" style={{justifyContent: 'center', width: 150, }} bg="#2e2a25">
+                <HStack alignItems="center">
+                  <IconButton icon={<Icon as={AntDesign} name="arrowleft" size="sm" color="#fbcf9c" />} /> 
+                  <Text style={styles.selectedItems}> Contacts</Text>
+                </HStack>
+            </Pressable>
         </HStack>
         <HStack mr={1}>
           <TouchableOpacity onPress={() => {}}>
@@ -196,25 +201,33 @@ const ProfilePage = ({route}) => {
             />
           </TouchableOpacity>
         </HStack>
-      </HStack>
+      </HStack> */}
+
       <ScrollView
         contentContainerStyle={styles.contentContainer}
         onScroll={handleScroll}
         scrollEventThrottle={16}
       >
         <View style={styles.profileContainer}>
-          <Center w="100%" mt={-5}>
+          <Center w="100%" mt={-2}>
             <Avatar
               bg="green.500"
               style={{ width: profilePictureSize, height: profilePictureSize }}
-              source={require("../assets/add-user.png")}
+              source={require("../assets/img/icons/mk.jpg")}
             />
         
-            <Box w="90%" maxW="400">
+            <Box justifyContent="center" alignItems="center" w="100%" maxW="400">
 
               <HStack px="3" justifyContent="center" alignItems="center" w="100%" maxW="350">
                   <Text style={styles.name}>{Params.name}</Text>
-                  <Image source={require('../assets/img/icons/verify.png')} style={{width: 15, height: 15, marginLeft: 5, marginTop: 10}} />
+                  <Image source={require('../assets/img/social/verify.png')} style={{width: 12, height: 12, marginLeft: 5, marginTop: 8}} />
+              </HStack>
+
+              <HStack px="3" justifyContent="center" alignItems="center" w="100%" maxW="350">
+                  <Text style={styles.subName}>Linked</Text>
+                  <View style={styles.imageBackground}>
+                    <Image source={require('../assets/img/social/broken-link.png')} style={{width: 10, height: 10}} />
+                  </View>
               </HStack>
               
             </Box>
@@ -226,15 +239,17 @@ const ProfilePage = ({route}) => {
                   contentContainerStyle={{padding: 8}}
                   keyExtractor={(item) => item.id}
                   renderItem={({ item }) => (
-                    <View style={[styles.itemContainer, { width: ITEM_WIDTH, marginLeft: ITEM_MARGIN, marginRight: ITEM_MARGIN }]}>
-                      <FontAwesome name={item.icon} size={12} color="#fbcf9c" />
-                      <Text style={styles.itemTitle}>{item.title}</Text>
-                    </View>
+                    <TouchableOpacity onPress={() => {navigation.navigate('Screen', { itemId: item.id, Params: item })}}>
+                        <View style={[styles.itemContainer, { width: ITEM_WIDTH, marginLeft: ITEM_MARGIN, marginRight: ITEM_MARGIN }]}>
+                          <FontAwesome name={item.icon} size={12} color="#fbcf9c" />
+                          <Text style={styles.itemTitle}>{item.title}</Text>
+                        </View>
+                    </TouchableOpacity>
                   )}
                 />
               </Center>
 
-              <Center w={windowWidth - 30} mt={2}>
+              {/* <Center w={windowWidth - 30} mt={2}>
                 <View style={styles.palette}>
                     <View>
                         <HStack justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
@@ -283,9 +298,9 @@ const ProfilePage = ({route}) => {
                         
                     </View>
                 </View>
-              </Center>
+              </Center> */}
 
-              <Center w={windowWidth - 30} mt={2}>
+              {/* <Center w={windowWidth - 30} mt={2}>
                 <View style={styles.palette}>
                     <View>
                         <HStack justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
@@ -302,10 +317,43 @@ const ProfilePage = ({route}) => {
                       </TouchableOpacity>
                     </View>
                 </View>
-              </Center>
+              </Center> */}
 
-              <Center w={windowWidth - 30} mt={2}>
-                <Accordion title="Professional Details" content={<EmailComponent />} />
+              <Center flex={1} w={windowWidth - 30} mt={0.3}>
+                  <Accordion 
+                    style={styles.accordShadow}
+                    title="Basic Information"
+                    height={250}
+                    content={<EmailComponent />}
+                  />
+
+                  <Accordion 
+                    style={styles.accordShadow}
+                    title="Demographic Information"
+                    height={250}
+                    content={<EmailComponent />}
+                  />
+
+                  <Accordion 
+                    style={styles.accordShadow}
+                    title="Educational Information"
+                    height={250}
+                    content={<EmailComponent />}
+                  />
+
+                  <Accordion 
+                    style={styles.accordShadow}
+                    title="Employment Information"
+                    height={250}
+                    content={<EmailComponent />}
+                  />
+
+                  <Accordion 
+                    style={styles.accordShadow}
+                    title="Social Information"
+                    height={250}
+                    content={<EmailComponent />}
+                  />
               </Center>
 
           </Center>
@@ -365,7 +413,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Roboto_300Light",
     color: "#fbcf9c",
-    marginTop: 10,
+    marginTop: 5,
+  },
+  subName: {
+    fontSize: 12,
+    fontFamily: "Roboto_300Light",
+    color: "#fbcf9c",
+    marginBottom: 5,
+    marginTop: 3
   },
   bio: {
     textAlign: "center",
@@ -398,33 +453,18 @@ const styles = StyleSheet.create({
   },
   palette: {
     width: "100%",
-    // height: 50,
+    // height: 100,
     paddingBottom: 10,
     paddingTop: 5,
     paddingHorizontal: 10,
     backgroundColor: '#2e2a25',
     borderRadius: 5,
     padding: 10,
-    shadowColor: "#8d8d8d",
-    shadowOffset: { width: -5, height: 5},
-    shadowOpacity: .4,
-    shadowRadius: 3,
-    elevation: 6,
-  },
-  accordionPalette: {
-    width: "100%",
-    height: 60,
-    paddingBottom: 10,
-    paddingTop: 5,
-    paddingHorizontal: 10,
-    backgroundColor: '#2e2a25',
-    borderRadius: 5,
-    padding: 10,
-    shadowColor: "#8d8d8d",
-    shadowOffset: { width: -5, height: 5},
-    shadowOpacity: .4,
-    shadowRadius: 3,
-    elevation: 6,
+    // shadowColor: "#8d8d8d",
+    // shadowOffset: { width: -5, height: 5},
+    // shadowOpacity: .4,
+    // shadowRadius: 3,
+    // elevation: 6,
   },
   LabelTitle: {
     fontFamily: 'Roboto_400Regular',
@@ -462,7 +502,21 @@ const styles = StyleSheet.create({
     position: 'relative',
     left: -5,
   },
-  
+  accordShadow: {
+    shadowColor: "#8d8d8d",
+    shadowOffset: { width: -5, height: 5},
+    shadowOpacity: .4,
+    shadowRadius: 3,
+    elevation: 9,
+  },
+  imageBackground: {
+    padding: 4,
+    borderRadius: 10,
+    backgroundColor: '#201d1a',
+    marginLeft: 2,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });
 
 export default ProfilePage;

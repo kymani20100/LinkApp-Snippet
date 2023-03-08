@@ -17,15 +17,7 @@ const PageName = 'CONTACTS';
 
 import { DATA } from "../Data/fake-api";
 
-const actions = [
-    {
-      text: "Scan",
-      icon: require("../assets/scan.png"),
-      name: "Add",
-      position: 1,
-      color: '#2e2a25', 
-      textColor: '#fbcf9c'
-    },
+const Generate = [
     {
       text: "Generate",
       icon: require("../assets/qr-code.png"),
@@ -34,6 +26,17 @@ const actions = [
       color: '#2e2a25', 
       textColor: '#fbcf9c'
     },
+  ];
+
+  const Scan = [
+    {
+      text: "Scan",
+      icon: require("../assets/scan.png"),
+      name: "Add",
+      position: 1,
+      color: '#2e2a25', 
+      textColor: '#fbcf9c'
+    }
   ];
 
 const Contacts = ({navigation}) => {
@@ -103,26 +106,6 @@ const Contacts = ({navigation}) => {
     }
   };
 
-  // const handleAlphabetClick = (index) => {
-  //   setSelectedAlphabet(index);
-  //   const matchingItemIndex = DATA.findIndex((item) =>
-  //     item.name.toUpperCase().startsWith(String.fromCharCode(65 + index))
-  //   );
-  //   if (matchingItemIndex === -1) {
-  //     return;
-  //   }
-  //   const sectionIndex = sections.findIndex(
-  //     (section) => section.data[0].id === DATA[matchingItemIndex].id
-  //   );
-  //   if (sectionIndex !== -1) {
-  //     sectionListRef.current.scrollToLocation({
-  //       sectionIndex: sectionIndex,
-  //       itemIndex: 0,
-  //       viewOffset: 0,
-  //     });
-  //   }
-  // };
-
   const handleAlphabetClick = useCallback((index) => {
     setSelectedAlphabet(index);
     const matchingItemIndex = DATA.findIndex((item) =>
@@ -143,31 +126,11 @@ const Contacts = ({navigation}) => {
     }
   }, []);
 
-  // Filter
-  // const filteredData = DATA.filter((item) =>
-  //   item.name.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
-
   const filteredData = useMemo(() => {
     return DATA.filter((item) =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [searchTerm]);
-
-  // const sections = [];
-  // const dataBySection = {};
-  // filteredData.forEach((item) => {
-  //   const sectionTitle = item.name[0].toUpperCase();
-  //   if (!dataBySection[sectionTitle]) {
-  //     dataBySection[sectionTitle] = [];
-  //     sections.push({
-  //       title: sectionTitle,
-  //       data: dataBySection[sectionTitle],
-  //     });
-  //   }
-  //   dataBySection[sectionTitle].push(item);
-  // });
-  
 
   const sections = useMemo(() => {
     const dataBySection = {};
@@ -179,12 +142,10 @@ const Contacts = ({navigation}) => {
       dataBySection[sectionTitle].push(item);
     });
     return Object.keys(dataBySection).map((title) => ({
-      title,
-      data: dataBySection[title],
+      title, data: dataBySection[title],
     }));
   }, [filteredData]);
 
-  // const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
   const alphabet = useMemo(() => "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""), []);
 
   return (
@@ -198,8 +159,9 @@ const Contacts = ({navigation}) => {
            
               <Pressable onPress={() => handleRefresh()} rounded="2" height={25} maxW="96" style={{justifyContent: 'center', width: 150, }} bg="#2e2a25">
                 <HStack alignItems="center">
-                  <IconButton icon={<Icon as={AntDesign} name="arrowleft" size="sm" color="#fbcf9c" />} /> 
-                  <Text style={styles.selectedItems}>{items.length} item(s) in the</Text>
+                  <Text style={styles.selectedItems}>{items.length}</Text>
+                  <IconButton icon={<Icon as={Entypo} name="v-card" size={3} color="#fbcf9c" />} />
+                  <Text style={styles.selectedItems}>in the</Text>
                   <Image source={require('../assets/img/gift.png')} style={{width: 10, height: 10, marginLeft: 5}} />
                 </HStack>
               </Pressable>
@@ -263,24 +225,42 @@ const Contacts = ({navigation}) => {
         </View>
 
         {/* THIS IS THE FLOATING ACTION BUTTON */}
-        <FloatingAction
+        {items.length > 0 ? (<FloatingAction
             color="#2e2a25"
             iconHeight={15}
             iconWidth={15}
             buttonSize={50}
             textElevation={5}
-            actions={actions}
+            actions={Generate}
             distanceToEdge={{vertical: 70, horizontal: 30}}
             onPressItem={(name) => {
-            if (name === "Add") {
-                // handle option 1 click
-                handleClearItems()
-            } else if (name === "Send") {
-                // handle option 2 click
-                onOpen()
-            }
+            // if (name === "Add") {
+            //     // handle option 1 click
+            //     handleClearItems()
+            // } else if (name === "Send") {
+            //     // handle option 2 click
+            //     onOpen()
+            // }
             }}
-        />
+        />) : (<FloatingAction
+          color="#2e2a25"
+          iconHeight={15}
+          iconWidth={15}
+          buttonSize={50}
+          textElevation={5}
+          actions={Scan}
+          distanceToEdge={{vertical: 70, horizontal: 30}}
+          onPressItem={(name) => {
+          // if (name === "Add") {
+          //     // handle option 1 click
+          //     handleClearItems()
+          // } else if (name === "Send") {
+          //     // handle option 2 click
+          //     onOpen()
+          // }
+          }}
+      />)}
+        
 
         {/* THIS IS THE FLOATING TAB BAR */}
         <Animated.View style={[styles.tabBar, { transform: [{ translateY }] }]}>
@@ -329,7 +309,6 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       fontFamily: "Roboto_500Medium",
       color: "#fbcf9c",
-      // marginLeft: 10,
     },
   searchContainer: {
     padding: 8,

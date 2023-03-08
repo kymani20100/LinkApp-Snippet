@@ -21,6 +21,7 @@ import {
   Roboto_400Regular,
   Roboto_500Medium,
   Roboto_700Bold,
+  Roboto_300Light_Italic,
   Roboto_900Black
 } from "@expo-google-fonts/roboto";
 import { Fondamento_400Regular } from "@expo-google-fonts/fondamento";
@@ -31,48 +32,24 @@ import {
   CrimsonText_700Bold,
 } from "@expo-google-fonts/crimson-text";
 
-function RecentsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Recents!</Text>
-    </View>
-  );
-}
-
-function ContacttScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Contacts!</Text>
-    </View>
-  );
-}
-
-function KeypadDial() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Contacts!</Text>
-    </View>
-  );
-}
-
 const slides = [
   {
     key: 's1',
-    title: 'Accuracy',
+    title: 'ACCURACY',
     text: 'Accurate Contact Info Sharing in a Snap! Goodbye to manual typing and cluttered address books with LinkApp.',
     image: require('./assets/img/intro_1.png'),
     backgroundColor: '#201d1a',
   },
   {
     key: 's2',
-    title: 'Effortlessly',
+    title: 'SEAMLESS',
     text: 'Our innovative solution combines a sleek user-friendly interface with advanced filtering to help you quickly and easily find the information you need.',
     image: require('./assets/img/intro_2.png'),
     backgroundColor: '#201d1a',
   },
   {
     key: 's4',
-    title: 'Profiles',
+    title: 'PROFILES',
     text: 'Discover the many layers of others from their interests and hobbies to their goals and aspirations. Connect and learn what makes others truly special.',
     image: require('./assets/img/intro_4.png'),
     backgroundColor: '#201d1a',
@@ -116,7 +93,18 @@ import Merger from "./screens/Merger";
 import LongPress from "./screens/LongPress";
 import SearchScreen from "./screens/SearchScreen";
 import Fab from "./screens/Fab";
+
+///////////////////////////////////////
 import Loading from "./screens/Loading";
+import ContactSharing from "./screens/ContactSharing";
+import Sharing from "./screens/Sharing";
+import ContactInformation from "./screens/ContactInformation";
+import IdentifyingInformationForm from "./screens/IdentifyingInformationForm";
+import DemographicInformationForm from "./screens/DemographicInformationForm";
+import Settings from "./screens/Settings";
+import SettingsPage from "./screens/SettingsPage";
+import ProfileScreen from "./screens/ProfileScreen";
+import ModalPicture from "./screens/ModalPicture";
 
 // Production
 import ContactScreen from "./screens/ContactScreen";
@@ -136,55 +124,55 @@ const Stack = createNativeStackNavigator();
 const TabCollection = () => {
   return (
     <Tab.Navigator
-                  screenOptions={({ route }) => ({
-                    tabBarIcon: ({ focused, color, size }) => {
-                      let iconName;
-                      if (route.name === "Favorites") {
-                        iconName = focused ? "ios-star" : "ios-star-sharp";
-                      } else if (route.name === "Recents") {
-                        iconName = focused ? "ios-time" : "ios-time-sharp";
-                      } else if (route.name === "Contacts") {
-                        iconName = focused
-                          ? "ios-person-circle"
-                          : "ios-person-circle-sharp";
-                      } else if (route.name === "Keypad") {
-                        iconName = focused ? "ios-keypad" : "ios-keypad";
-                      }
-                      // You can return any component that you like here!
-                      return (
-                        <Ionicons name={iconName} size={size} color={color} />
-                      );
-                    },
-                    tabBarActiveTintColor: "#015ba8",
-                    tabBarInactiveTintColor: "#0085f7",
-                    tabBarLabelStyle: {
-                      fontFamily: "Roboto_400Regular",
-                      marginBottom: 3,
-                    },
-                    tabBarStyle: { backgroundColor: "#f7f7f7" },
-                  })}
-                >
-                  <Tab.Screen
-                    options={{ headerShown: false }}
-                    name="Favorites"
-                    component={FlatListWithDialog}
-                  />
-                  <Tab.Screen
-                    options={{ headerShown: false }}
-                    name="Recents"
-                    component={ContactForm}
-                  />
-                  <Tab.Screen
-                    options={{ headerShown: false }}
-                    name="Contacts"
-                    component={FormField}
-                  />
-                  <Tab.Screen
-                    options={{ headerShown: false }}
-                    name="Keypad"
-                    component={KeypadScreen}
-                  />
-                </Tab.Navigator>
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+            if (route.name === "Favorites") {
+              iconName = focused ? "ios-star" : "ios-star-sharp";
+            } else if (route.name === "Recents") {
+              iconName = focused ? "ios-time" : "ios-time-sharp";
+            } else if (route.name === "Contacts") {
+              iconName = focused
+                ? "ios-person-circle"
+                : "ios-person-circle-sharp";
+            } else if (route.name === "Keypad") {
+              iconName = focused ? "ios-keypad" : "ios-keypad";
+            }
+            // You can return any component that you like here!
+            return (
+              <Ionicons name={iconName} size={size} color={color} />
+            );
+          },
+          tabBarActiveTintColor: "#015ba8",
+          tabBarInactiveTintColor: "#0085f7",
+          tabBarLabelStyle: {
+            fontFamily: "Roboto_400Regular",
+            marginBottom: 3,
+          },
+          tabBarStyle: { backgroundColor: "#f7f7f7" },
+        })}
+      >
+        <Tab.Screen
+          options={{ headerShown: false }}
+          name="Favorites"
+          component={FlatListWithDialog}
+        />
+        <Tab.Screen
+          options={{ headerShown: false }}
+          name="Recents"
+          component={ContactForm}
+        />
+        <Tab.Screen
+          options={{ headerShown: false }}
+          name="Contacts"
+          component={FormField}
+        />
+        <Tab.Screen
+          options={{ headerShown: false }}
+          name="Keypad"
+          component={KeypadScreen}
+        />
+      </Tab.Navigator>
   )
 }
 
@@ -207,6 +195,7 @@ export default function App() {
     Roboto_400Regular,
     Roboto_500Medium,
     Roboto_700Bold,
+    Roboto_300Light_Italic,
     Roboto_900Black,
     Fondamento_400Regular,
     ShortStack_400Regular,
@@ -256,11 +245,20 @@ export default function App() {
               <NativeBaseProvider>
                 <PaperProvider>
                   <NavigationContainer>
-                    <Stack.Navigator>
-                      <Stack.Screen options={{ headerShown: false }} name="Home" component={Contacts} />
+                    <Stack.Navigator >
+                      <Stack.Screen options={{ headerShown: false }} name="Home" component={StartScreen} />
                       <Stack.Screen options={{ headerShown: false }} name="SignUp" component={SignUpScreen} />
-                      <Stack.Screen options={{ headerShown: false }} name="Profile" component={ProfilePage} />
+                      <Stack.Screen 
+                        options={{ 
+                                headerShown: true, 
+                                headerStyle: {backgroundColor: '#201d1a'},
+                                headerTintColor: '#fbcf9c',
+                                headerTitleStyle: {
+                                fontFamily: "Roboto_700Bold",}, }} 
+                        name="Profile" component={ProfilePage} />
                       <Stack.Screen options={{ headerShown: false }} name="Pinterest" component={Pinterest} />
+                      <Stack.Screen options={{ headerShown: false }} name="Contacts" component={Contacts} />
+                      <Stack.Screen options={{ headerShown: true }} name="Screen" component={ProfileScreen} />
                     </Stack.Navigator>
                     <Toast config={toastConfig} />
                   </NavigationContainer>

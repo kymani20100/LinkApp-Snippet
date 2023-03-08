@@ -135,7 +135,7 @@ const SignUpScreen = ({ navigation }) => {
                 mode="elevated"
                 buttonColor="#0085f7"
                 textColor="#FFF"
-                onPress={() => {navigation.navigate('Pinterest')}}
+                onPress={() => {navigation.navigate('Contacts')}}
               >
                 Sign Up
               </Button>

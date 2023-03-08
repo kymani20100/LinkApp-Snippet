@@ -1,11 +1,20 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Animated, Image, Vibration } from 'react-native';
-import {MaterialIcons} from "@expo/vector-icons";
-import {IconButton,Icon} from "native-base";
+import { MaterialIcons } from "@expo/vector-icons";
+import { IconButton, Icon } from "native-base";
 
-const Accordion = ({ title, content, height }) => {
-  const [expanded, setExpanded] = useState(false);
-  const animation = useRef(new Animated.Value(0)).current;
+const Accordion = ({ title, content, height, isOpen, onToggle }) => {
+  const [expanded, setExpanded] = useState(isOpen);
+  const animation = useRef(new Animated.Value(isOpen ? 1 : 0)).current;
+
+  useEffect(() => {
+    setExpanded(isOpen);
+    Animated.timing(animation, {
+      toValue: isOpen ? 1 : 0,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  }, [isOpen]);
 
   const handlePress = () => {
     const toValue = expanded ? 0 : 1;
@@ -16,6 +25,7 @@ const Accordion = ({ title, content, height }) => {
       useNativeDriver: false,
     }).start(() => {
       setExpanded(!expanded);
+      onToggle(title);
     });
   };
 
@@ -27,13 +37,11 @@ const Accordion = ({ title, content, height }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.titleContainer} onPress={handlePress}>
-
-          <View style={styles.imageBackground}>
-            <Image source={require('../assets/img/social/verify.png')} style={{width: 15, height: 15}} />
-          </View>
-        
+        <View style={styles.imageBackground}>
+          <Image source={require('../assets/img/social/verify.png')} style={{ width: 15, height: 15 }} />
+        </View>
         <Text style={[styles.title]}>{title}</Text>
-        <View style={styles.icon}>{expanded ? (<IconButton icon={<Icon as={MaterialIcons} name="keyboard-arrow-up" size="md" color="#fbcf9c" />} /> ) : (<IconButton icon={<Icon as={MaterialIcons} name="keyboard-arrow-down" size="md" color="#fbcf9c" />} /> )}</View>
+        <View style={styles.icon}>{expanded ? (<IconButton icon={<Icon as={MaterialIcons} name="keyboard-arrow-up" size="md" color="#fbcf9c" />} />) : (<IconButton icon={<Icon as={MaterialIcons} name="keyboard-arrow-down" size="md" color="#fbcf9c" />} />)}</View>
       </TouchableOpacity>
       <Animated.View style={{ height: contentHeight, overflow: 'hidden' }}>
         <View style={styles.content}>{content}</View>

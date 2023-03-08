@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity, Vibration } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 import { addItem, removeItem } from '../store/reducers/reducer';
@@ -20,43 +20,59 @@ const Card = (data) => {
       SetCardSelected(isSelected);
     }, [items]);
 
-    const HandleLongPress = () => {
-      const itemId = props.id;
-      Vibration.vibrate(100);
-      if (!isPressed) {
-        dispatch(addItem({ id: itemId, name: props.name }));
-      } else {
-        dispatch(removeItem(itemId));
-      }
-      setIsPressed(!isPressed);
-      console.log('Long Pressed');
-    };
+    // const HandleLongPress = () => {
+    //   const itemId = props.id;
+    //   if (!isPressed) {
+    //     dispatch(addItem({ id: itemId, name: props.name }));
+    //   } else {
+    //     dispatch(removeItem(itemId));
+    //   }
+    //   setIsPressed(!isPressed);
+    //   console.log('Long Pressed');
+    //   Vibration.vibrate(100);
+    // };
 
-    const HandleShortPress = () => {
+    const HandleLongPress = useCallback(() => {
+      const itemId = props.id;
+      dispatch(isPressed ? removeItem(itemId) : addItem({ id: itemId, name: props.name }));
+      setIsPressed(prevIsPressed => !prevIsPressed);
+      Vibration.vibrate(100);
+    }, [dispatch, isPressed, props.id, props.name]);
+    
+
+    const HandleShortPress = useCallback(() => {
       const itemId = props.id;
       if (items.length && !isPressed) {
-        Vibration.vibrate(100);
         dispatch(addItem({ id: itemId, name: props.name }));
         setIsPressed(true);
-        Vibration.vibrate(100);
       } else if (isPressed) {
-        Vibration.vibrate(100);
         dispatch(removeItem(itemId));
         setIsPressed(false);
       } else {
-        Vibration.vibrate(50);
-        navigation.navigate('Profile', { itemId: itemId, Params: props });
+        navigation.push('Profile', { itemId: itemId, Params: props });
       }
-    };
-    
-    // const styles = isPressed ? stylesPressed : stylesUnpressed;
-    const styles = cardSelected ? stylesPressed : stylesUnpressed;
+      Vibration.vibrate(100);
+    }, [dispatch, items, isPressed, navigation, props]);    
 
-    
+    // const HandleShortPress = () => {
+    //   const itemId = props.id;
+    //   if (items.length && !isPressed) {
+    //     dispatch(addItem({ id: itemId, name: props.name }));
+    //     setIsPressed(true);
+    //   } else if (isPressed) {
+    //     dispatch(removeItem(itemId));
+    //     setIsPressed(false);
+    //   } else {
+    //     navigation.push('Profile', { itemId: itemId, Params: props });
+    //   }
+    //   Vibration.vibrate(100);
+    // };
+
+    const styles = cardSelected ? stylesPressed : stylesUnpressed;
   return (
-    <TouchableOpacity style={[styles.touchableBg]} onLongPress={HandleLongPress} onPress={HandleShortPress}>
-        <View style={[styles.contactItem]}>
-            <Text style={[styles.contactList]}>{props.name}</Text>
+    <TouchableOpacity style={styles.touchableBg} onLongPress={HandleLongPress} onPress={HandleShortPress}>
+        <View style={styles.contactItem}>
+            <Text style={styles.contactList}>{props.name}</Text>
         </View>
     </TouchableOpacity>
   )

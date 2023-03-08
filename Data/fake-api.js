@@ -29,6 +29,18 @@ export const DATA = [
   { id: "24", name: "Xavier William", phone: "999-444-8888" },
   { id: "25", name: "Yara Abdul", phone: "111-666-1111" },
   { id: "26", name: "Zoe Saldana", phone: "222-777-2222" },
+  { id: "28", name: "Michael Davis", phone: "555-555-1234" },
+  { id: "29", name: "Samantha Wilson", phone: "123-456-7890"},
+  { id: "30", name: "Isaac Kim", phone: "555-123-4567"},
+  { id: "31", name: "Anna Garcia", phone: "555-987-6543"},
+  { id: "32", name: "Jasmine Patel", phone: "555-777-8888"},
+  { id: "34", name: "Maria Rodriguez", phone: "555-555-1234"},
+  { id: "35", name: "John Smith", phone: "123-456-7890"},
+  { id: "36", name: "Emily Johnson", phone: "555-123-4567"},
+  { id: "37", name: "David Lee", phone: "555-987-6543"},
+  { id: "38", name: "Sophie Brown", phone: "555-777-8888"},
+
+
 ];
 
 export const icons = [{
