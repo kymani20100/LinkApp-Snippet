@@ -5,7 +5,7 @@ import {Divider,Actionsheet,Center,useDisclose,Box,HStack,Avatar,VStack,IconButt
 import {Ionicons,FontAwesome,Entypo,AntDesign} from "@expo/vector-icons";
 import { Button } from "react-native-paper";
 import Accordion from "../components/Accordion";
-
+import CopyComponent from "../components/CopyComponent";
 
 import * as Clipboard from 'expo-clipboard';
 import CustomToast from "../components/CustomToast";
@@ -32,128 +32,73 @@ const ProfilePage = ({route}) => {
   const [copiedWork, setCopiedWork] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
 
-  const EmailComponent = () => {
+  const BasicComponent = () => {
     return (
       <View style={styles.palette}>
-          <View style={{marginBottom: 10}}>
-            <HStack justifyContent={'space-between'} alignItems="center" w="100%">
-                <Text style={styles.LabelTitle}>email</Text>
-            </HStack>
 
-          <TouchableOpacity onPress={() => copyToClipboard('kymani.emmanuel@gmail.com', 'email')}>
-            <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                <Text style={styles.LabelContent}>kymani.emmanuel@gmail.com</Text>
-                <View style={styles.Clipbox}>
-                  {copiedEmail === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
-                </View>
-            </HStack>
-          </TouchableOpacity>
-        </View>
+          <CopyComponent label="email" content={'kymani.emmanuel@gmail.com'} />
+          <CopyComponent label="phone" content={'0245160187'} />
+          <CopyComponent label="work" content={'0558421802'} />
+          <CopyComponent label="home" content={'0542634605'} />
 
-        <View style={{marginBottom: 10}}>
-            <HStack justifyContent={'space-between'} alignItems="center" w="100%">
-                <Text style={styles.LabelTitle}>email</Text>
-            </HStack>
-
-          <TouchableOpacity onPress={() => copyToClipboard('kymani.emmanuel@gmail.com', 'email')}>
-            <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                <Text style={styles.LabelContent}>kymani.emmanuel@gmail.com</Text>
-                <View style={styles.Clipbox}>
-                  {copiedEmail === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
-                </View>
-            </HStack>
-          </TouchableOpacity>
-        </View>
-
-        <View style={{marginBottom: 10}}>
-            <HStack justifyContent={'space-between'} alignItems="center" w="100%">
-                <Text style={styles.LabelTitle}>email</Text>
-            </HStack>
-
-          <TouchableOpacity onPress={() => copyToClipboard('kymani.emmanuel@gmail.com', 'email')}>
-            <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                <Text style={styles.LabelContent}>kymani.emmanuel@gmail.com</Text>
-                <View style={styles.Clipbox}>
-                  {copiedEmail === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
-                </View>
-            </HStack>
-          </TouchableOpacity>
-        </View>
-
-        <View style={{marginBottom: 10}}>
-            <HStack justifyContent={'space-between'} alignItems="center" w="100%">
-                <Text style={styles.LabelTitle}>email</Text>
-            </HStack>
-
-          <TouchableOpacity onPress={() => copyToClipboard('kymani.emmanuel@gmail.com', 'email')}>
-            <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                <Text style={styles.LabelContent}>kymani.emmanuel@gmail.com</Text>
-                <View style={styles.Clipbox}>
-                  {copiedEmail === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
-                </View>
-            </HStack>
-          </TouchableOpacity>
-        </View>
-
-        <View style={{marginBottom: 10}}>
-            <HStack justifyContent={'space-between'} alignItems="center" w="100%">
-                <Text style={styles.LabelTitle}>email</Text>
-            </HStack>
-
-          <TouchableOpacity onPress={() => copyToClipboard('kymani.emmanuel@gmail.com', 'email')}>
-            <HStack flex={1} justifyContent={'space-between'} alignItems="center" w="100%" maxW="350">
-                <Text style={styles.LabelContent}>kymani.emmanuel@gmail.com</Text>
-                <View style={styles.Clipbox}>
-                  {copiedEmail === true ? (<Image source={require('../assets/img/icons/tick.png')} style={{width: 12, height: 12}} />) : (<Image source={require('../assets/img/icons/clipboard.png')} style={{width: 12, height: 12}} />)}
-                </View>
-            </HStack>
-          </TouchableOpacity>
-        </View>
-         
       </View>
     );
   }
 
-  const copyToClipboard = async (term, field) => {
-    const result = await Clipboard.setStringAsync(term);
-    if(result){
-      if(field === 'email'){
-        setCopiedEmail(true);
-        Vibration.vibrate(100);
-        CustomToast({ field: 'Work', term: 'email', type: 'success' });
-          
-        setTimeout(() => {
-          setCopiedEmail(false);
-        }, 5000);
-      }else if (field === 'home'){
-        setCopiedHome(true);
-        Vibration.vibrate(100);
-        CustomToast({ field: 'Work', term: 'email', type: 'success' });
-        setTimeout(() => {
-          setCopiedHome(false);
-        }, 5000);
-      }else if (field === 'mobile'){
-        setCopiedMobile(true);
-        Vibration.vibrate(100);
-        CustomToast({ field: 'Work', term: 'email', type: 'success' });
-        setTimeout(() => {
-          setCopiedMobile(false);
-        }, 5000);
-      }else if (field === 'work'){
-        setCopiedWork(true);
-        Vibration.vibrate(100);
-        CustomToast({ field: 'Work', term: 'email', type: 'success' });
-        setTimeout(() => {
-          setCopiedWork(false);
-        }, 5000);
-      }
-    }
-  };
+  const DemographicComponent = () => {
+    return (
+      <View style={styles.palette}>
 
-  const fetchCopiedText = async () => {
-    const text = await Clipboard.getStringAsync();
-    setCopiedText(text);
-  };
+          <CopyComponent label="Gender" content={'Male'} />
+          <CopyComponent label="Ethnicity" content={'Black or African American'} />
+          <CopyComponent label="Nationality" content={'Ghanaian'} />
+          <CopyComponent label="Marital Status" content={'Single'} />
+          <CopyComponent label="Religion" content={'Other'} />
+
+      </View>
+    );
+  }
+
+  const EducationalComponent = () => {
+    return (
+      <View style={styles.palette}>
+
+          <CopyComponent label="Highest Qualification" content={'Diploma'} />
+          <CopyComponent label="School / Institution" content={'Zepto Professional Institution'} />
+          <CopyComponent label="Major / Course" content={'Software Engineering'} />
+          <CopyComponent label="Year of Graduation" content={'2014'} />
+
+      </View>
+    );
+  }
+
+  const EmploymentComponent = () => {
+    return (
+      <View style={styles.palette}>
+
+          <CopyComponent label="Company Name" content={'STC Intercity Coaches'} />
+          <CopyComponent label="Job Title" content={'Software Developer'} />
+          <CopyComponent label="Employment Type" content={'IT / Software / Communication'} />
+          <CopyComponent label="Employment Status" content={'Employed'} />
+
+      </View>
+    );
+  }
+
+  const SocialComponent = () => {
+    return (
+      <View style={styles.palette}>
+
+          <CopyComponent label="facebook" content={'kymani.emmanuel@gmail.com'} />
+          <CopyComponent label="twitter" content={'0245160187'} />
+          <CopyComponent label="instagram" content={'0558421802'} />
+          <CopyComponent label="youtube" content={'0542634605'} />
+          <CopyComponent label="snapchat" content={'0542634605'} />
+          <CopyComponent label="tiktok" content={'0542634605'} />
+
+      </View>
+    );
+  }
 
   const windowWidth = Dimensions.get('window').width;
   const [scrollDirection, setScrollDirection] = useState("none");
@@ -179,29 +124,7 @@ const ProfilePage = ({route}) => {
   return (
     <VStack bg="#201d1a" flex={1} mt={-6}>
       <StatusBar bg="#2e2a25" barStyle="light-content" />
-      {/* <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#2e2a25" translucent = {true}/> */}
       <Box safeAreaTop bg="#2e2a25" />
-      
-      {/* <HStack bg="#2e2a25" px="1" py="0" justifyContent="space-between" alignItems="center" w="100%" maxW="350">
-        <HStack alignItems="flex-start">
-
-            <Pressable onPress={() => navigation.goBack()} rounded="2" height={25} maxW="96" style={{justifyContent: 'center', width: 150, }} bg="#2e2a25">
-                <HStack alignItems="center">
-                  <IconButton icon={<Icon as={AntDesign} name="arrowleft" size="sm" color="#fbcf9c" />} /> 
-                  <Text style={styles.selectedItems}> Contacts</Text>
-                </HStack>
-            </Pressable>
-        </HStack>
-        <HStack mr={1}>
-          <TouchableOpacity onPress={() => {}}>
-            <IconButton
-              icon={
-                <Icon as={Octicons} name="trash" size="sm" color="#fbcf9c" />
-              }
-            />
-          </TouchableOpacity>
-        </HStack>
-      </HStack> */}
 
       <ScrollView
         contentContainerStyle={styles.contentContainer}
@@ -268,36 +191,36 @@ const ProfilePage = ({route}) => {
                   <Accordion 
                     style={styles.accordShadow}
                     title="Basic Information"
-                    height={250}
-                    content={<EmailComponent />}
+                    height={200}
+                    content={<BasicComponent />}
                   />
 
                   <Accordion 
                     style={styles.accordShadow}
                     title="Demographic Information"
                     height={250}
-                    content={<EmailComponent />}
+                    content={<DemographicComponent />}
                   />
 
                   <Accordion 
                     style={styles.accordShadow}
                     title="Educational Information"
-                    height={250}
-                    content={<EmailComponent />}
+                    height={200}
+                    content={<EducationalComponent />}
                   />
 
                   <Accordion 
                     style={styles.accordShadow}
                     title="Employment Information"
-                    height={250}
-                    content={<EmailComponent />}
+                    height={200}
+                    content={<EmploymentComponent />}
                   />
 
                   <Accordion 
                     style={styles.accordShadow}
                     title="Social Information"
                     height={250}
-                    content={<EmailComponent />}
+                    content={<SocialComponent />}
                   />
               </Center>
 
